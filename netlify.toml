@@ -16,15 +16,15 @@
     Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=()"
     Content-Security-Policy = """
       default-src 'self';
-      script-src 'self' 'unsafe-inline' webforms.pipedrive.com *.pipedrive.com *.googletagmanager.com *.google-analytics.com;
+      script-src 'self' 'unsafe-inline' formspree.io *.googletagmanager.com *.google-analytics.com;
       style-src 'self' 'unsafe-inline' fonts.googleapis.com;
       font-src 'self' fonts.gstatic.com;
       img-src 'self' data: https:;
-      frame-src webforms.pipedrive.com *.pipedrive.com;
-      connect-src 'self' webforms.pipedrive.com *.pipedrive.com *.google-analytics.com *.googletagmanager.com;
+      frame-src formspree.io;
+      connect-src 'self' formspree.io *.google-analytics.com *.googletagmanager.com;
       object-src 'none';
       base-uri 'self';
-      form-action 'self' webforms.pipedrive.com;
+      form-action 'self' formspree.io;
     """
 
 # Performance Headers

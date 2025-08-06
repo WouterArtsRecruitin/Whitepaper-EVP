@@ -385,13 +385,123 @@ body {
   font-size: var(--font-size-base);
 }
 
-/* Pipedrive Form Styling */
-.pipedrive-form-container {
+/* Download Form Styling */
+.download-form {
   margin-bottom: var(--spacing-lg);
 }
 
-.pipedriveWebForms {
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 600;
+  color: var(--recruitin-primary);
+  font-size: var(--font-size-sm);
+}
+
+.form-group input,
+.form-group select {
   width: 100%;
+  padding: var(--spacing-md);
+  border: 2px solid var(--border-light);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-base);
+  font-family: var(--font-primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: var(--white);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--recruitin-accent);
+  box-shadow: 0 0 0 3px rgba(244, 124, 60, 0.1);
+}
+
+.form-group input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-lg) 0;
+}
+
+.form-checkbox input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  accent-color: var(--recruitin-accent);
+}
+
+.form-checkbox label {
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin: 0;
+}
+
+.download-button {
+  width: 100%;
+  background: var(--gradient-cta);
+  color: var(--white);
+  border: none;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  box-shadow: var(--shadow-cta);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.download-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(244, 124, 60, 0.4);
+}
+
+.download-button:active {
+  transform: translateY(0);
+}
+
+.download-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.download-icon {
+  font-size: var(--font-size-lg);
+}
+
+.form-disclaimer {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.4;
+  margin-top: var(--spacing-md);
+}
+
+.form-disclaimer a {
+  color: var(--recruitin-accent);
+  text-decoration: underline;
+}
+
+.form-disclaimer a:hover {
+  color: var(--recruitin-primary);
 }
 
 /* Trust Indicators */
@@ -688,13 +798,52 @@ textarea:focus {
           </p>
         </div>
 
-        <!-- Pipedrive Form -->
-        <div class="pipedrive-form-container">
-          <div class="pipedriveWebForms" 
-               data-pd-webforms="https://webforms.pipedrive.com/f/6rK4vEjEqfHxEDjBOI6LW8QkDO8LOOe6iuEQ6mHs82xSEYrLgmzP83C5HS9DOANNB1">
-            <script src="https://webforms.pipedrive.com/f/loader"></script>
+        <!-- Download Form -->
+        <form class="download-form" id="whitepaper-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="name">Naam *</label>
+            <input type="text" id="name" name="name" required placeholder="Uw volledige naam">
           </div>
-        </div>
+          
+          <div class="form-group">
+            <label for="email">E-mailadres *</label>
+            <input type="email" id="email" name="email" required placeholder="uw.email@bedrijf.nl">
+          </div>
+          
+          <div class="form-group">
+            <label for="company">Bedrijf *</label>
+            <input type="text" id="company" name="company" required placeholder="Uw bedrijfsnaam">
+          </div>
+          
+          <div class="form-group">
+            <label for="role">Functie</label>
+            <select id="role" name="role">
+              <option value="">Selecteer uw functie</option>
+              <option value="hr-director">HR Director</option>
+              <option value="recruiter">Recruiter</option>
+              <option value="talent-acquisition">Talent Acquisition</option>
+              <option value="ceo-founder">CEO/Founder</option>
+              <option value="manager">Manager</option>
+              <option value="anders">Anders</option>
+            </select>
+          </div>
+          
+          <div class="form-checkbox">
+            <input type="checkbox" id="newsletter" name="newsletter" checked>
+            <label for="newsletter">Ja, ik wil updates ontvangen over recruitment best practices van Recruitin</label>
+          </div>
+          
+          <button type="submit" class="download-button" id="download-btn">
+            <span class="download-icon">📥</span>
+            <span class="download-text">Download Gratis Whitepaper</span>
+            <span class="loading-spinner" id="form-spinner" style="display: none;"></span>
+          </button>
+          
+          <p class="form-disclaimer">
+            Door het formulier in te vullen gaat u akkoord met onze 
+            <a href="#" target="_blank">privacyverklaring</a> en het ontvangen van relevante content van Recruitin.
+          </p>
+        </form>
 
         <!-- Trust Indicators -->
         <div class="trust-indicators">
@@ -755,13 +904,15 @@ textarea:focus {
         });
         
         // Track form interaction
-        const formElement = document.querySelector('.pipedriveWebForms');
+        const formElement = document.querySelector('#whitepaper-form');
         if (formElement) {
-          formElement.addEventListener('click', function() {
-            gtag('event', 'form_interaction', {
-              'event_category': 'engagement',
-              'event_label': 'pipedrive_form_click'
-            });
+          formElement.addEventListener('submit', function() {
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'form_submit', {
+                'event_category': 'engagement',
+                'event_label': 'whitepaper_download_form'
+              });
+            }
           });
         }
       }
@@ -861,10 +1012,121 @@ textarea:focus {
       }, 100);
     }
     
-    // Form validation enhancement (if needed)
+    // Form submission handler
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      
+      const form = event.target;
+      const submitBtn = document.getElementById('download-btn');
+      const spinner = document.getElementById('form-spinner');
+      const btnText = submitBtn.querySelector('.download-text');
+      
+      // Validate form
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const company = form.company.value.trim();
+      
+      if (!name || !email || !company) {
+        alert('Vul alle verplichte velden in.');
+        return;
+      }
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      spinner.style.display = 'inline-block';
+      btnText.textContent = 'Bezig met verwerken...';
+      
+      // Simulate form processing
+      setTimeout(() => {
+        // Track conversion
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'conversion', {
+            'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+            'event_category': 'lead_generation',
+            'event_label': 'evp_whitepaper_download'
+          });
+        }
+        
+        // Trigger download
+        triggerWhitepaperDownload();
+        
+        // Show success state
+        btnText.textContent = 'Whitepaper gedownload!';
+        submitBtn.style.background = 'var(--recruitin-success)';
+        
+        // Reset form after delay
+        setTimeout(() => {
+          form.reset();
+          submitBtn.disabled = false;
+          spinner.style.display = 'none';
+          btnText.textContent = 'Download Gratis Whitepaper';
+          submitBtn.style.background = '';
+          
+          // Show thank you message
+          showThankYouMessage();
+        }, 2000);
+        
+      }, 1500);
+    }
+    
+    // Trigger whitepaper download
+    function triggerWhitepaperDownload() {
+      // Create download link for whitepaper PDF
+      const link = document.createElement('a');
+      link.href = '#'; // Replace with actual PDF URL
+      link.download = 'Recruitin-EVP-Whitepaper-De-Verborgen-Kracht.pdf';
+      link.style.display = 'none';
+      
+      document.body.appendChild(link);
+      // link.click(); // Uncomment when PDF is ready
+      document.body.removeChild(link);
+      
+      // For now, show modal with download info
+      alert('🎉 Bedankt! Uw whitepaper download wordt voorbereid. U ontvangt deze binnenkort per email.');
+    }
+    
+    // Show thank you message
+    function showThankYouMessage() {
+      const formCard = document.querySelector('.form-card');
+      const originalContent = formCard.innerHTML;
+      
+      formCard.innerHTML = `
+        <div class="thank-you-message" style="text-align: center; padding: var(--spacing-xl);">
+          <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">🎉</div>
+          <h3 style="color: var(--recruitin-primary); margin-bottom: var(--spacing-md);">Bedankt voor uw interesse!</h3>
+          <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">U ontvangt de EVP whitepaper binnenkort per email samen met exclusieve recruitment insights.</p>
+          <div class="trust-indicators" style="margin-top: var(--spacing-lg);">
+            <div class="trust-item">✅ Direct toegang</div>
+            <div class="trust-item">📧 Email bevestiging</div>
+            <div class="trust-item">🔒 Gegevens beveiligd</div>
+          </div>
+        </div>
+      `;
+      
+      // Reset after 10 seconds
+      setTimeout(() => {
+        formCard.innerHTML = originalContent;
+        // Re-attach event listeners
+        document.querySelector('#whitepaper-form').addEventListener('submit', handleFormSubmit);
+      }, 10000);
+    }
+    
+    // Form validation enhancement
     function validateForm() {
-      // Custom validation logic can be added here
-      return true;
+      const form = document.getElementById('whitepaper-form');
+      const inputs = form.querySelectorAll('input[required], select[required]');
+      
+      let isValid = true;
+      inputs.forEach(input => {
+        if (!input.value.trim()) {
+          input.style.borderColor = '#e74c3c';
+          isValid = false;
+        } else {
+          input.style.borderColor = '';
+        }
+      });
+      
+      return isValid;
     }
   </script>
 

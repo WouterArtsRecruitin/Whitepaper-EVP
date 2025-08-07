@@ -16,13 +16,13 @@
     Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=()"
     Content-Security-Policy = """
       default-src 'self';
-      script-src 'self' 'unsafe-inline' webforms.pipedrive.com *.pipedrive.com *.googletagmanager.com *.google-analytics.com;
-      style-src 'self' 'unsafe-inline' fonts.googleapis.com;
+      script-src 'self' 'unsafe-inline' webforms.pipedrive.com *.pipedrive.com *.pipedriveassets.com cdn.dub-1.pipedriveassets.com *.googletagmanager.com *.google-analytics.com;
+      style-src 'self' 'unsafe-inline' fonts.googleapis.com *.pipedriveassets.com;
       font-src 'self' fonts.gstatic.com;
       img-src 'self' data: https:;
       frame-src webforms.pipedrive.com *.pipedrive.com https:;
       frame-ancestors 'self';
-      connect-src 'self' webforms.pipedrive.com *.pipedrive.com *.google-analytics.com *.googletagmanager.com recruitin.nl https:;
+      connect-src 'self' webforms.pipedrive.com *.pipedrive.com *.pipedriveassets.com *.google-analytics.com *.googletagmanager.com recruitin.nl https:;
       object-src 'none';
       base-uri 'self';
       form-action 'self' webforms.pipedrive.com https:;

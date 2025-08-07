@@ -385,18 +385,22 @@ body {
   font-size: var(--font-size-base);
 }
 
-/* Simple Fast Pipedrive Form Styling */
-.pipedriveWebForms {
+/* Direct Pipedrive Iframe Styling */
+#pipedrive-iframe {
   width: 100%;
+  height: 500px;
+  border: none;
+  border-radius: var(--border-radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-soft);
   margin-bottom: var(--spacing-lg);
 }
 
-/* Basic Pipedrive iframe styling */
-.pipedriveWebForms iframe {
-  width: 100% !important;
-  border: none !important;
-  border-radius: var(--border-radius-md) !important;
-  min-height: 400px;
+/* Responsive iframe */
+@media (max-width: 768px) {
+  #pipedrive-iframe {
+    height: 600px;
+  }
 }
 
 /* Trust Indicators */
@@ -693,10 +697,15 @@ textarea:focus {
           </p>
         </div>
 
-        <!-- Simple Fast Pipedrive Form -->
-        <div class="pipedriveWebForms" data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh">
-          <script src="https://webforms.pipedrive.com/f/loader"></script>
-        </div>
+        <!-- Direct Pipedrive Iframe for Maximum Speed -->
+        <iframe 
+          src="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh" 
+          width="100%" 
+          height="500" 
+          frameborder="0"
+          id="pipedrive-iframe"
+          style="border: none; border-radius: 12px; background: #fff;">
+        </iframe>
 
         <!-- Trust Indicators -->
         <div class="trust-indicators">
@@ -711,14 +720,28 @@ textarea:focus {
 
   <!-- Scripts -->
   <script>
-    // Simple Fast Pipedrive Form Handler
+    // Direct Iframe Pipedrive Form Handler
     document.addEventListener('DOMContentLoaded', function() {
       console.log('🚀 EVP Whitepaper Landing Page geladen - Recruitin');
       
-      // Listen for Pipedrive form events
+      const iframe = document.getElementById('pipedrive-iframe');
+      
+      // Listen for iframe load
+      if (iframe) {
+        iframe.onload = function() {
+          console.log('✅ Pipedrive iframe loaded successfully');
+        };
+      }
+      
+      // Listen for Pipedrive form events from iframe
       window.addEventListener('message', function(e) {
-        if (e.data && e.data.type === 'pipedrive-form-submitted') {
-          console.log('🎉 Pipedrive form submitted successfully');
+        // Handle different Pipedrive event types
+        if (e.data && (
+          e.data.type === 'pipedrive-form-submitted' ||
+          e.data.type === 'form-submitted' ||
+          (e.data.event && e.data.event === 'form-submitted')
+        )) {
+          console.log('🎉 Pipedrive iframe form submitted successfully');
           
           // Track conversion
           if (typeof gtag !== 'undefined') {
@@ -734,6 +757,11 @@ textarea:focus {
           
           // Show success message
           showSuccessMessage();
+        }
+        
+        // Log all messages for debugging
+        if (e.origin && e.origin.includes('pipedrive')) {
+          console.log('📨 Pipedrive message:', e.data);
         }
       });
       

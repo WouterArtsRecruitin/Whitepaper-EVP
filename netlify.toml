@@ -20,11 +20,12 @@
       style-src 'self' 'unsafe-inline' fonts.googleapis.com;
       font-src 'self' fonts.gstatic.com;
       img-src 'self' data: https:;
-      frame-src webforms.pipedrive.com *.pipedrive.com;
-      connect-src 'self' webforms.pipedrive.com *.pipedrive.com *.google-analytics.com *.googletagmanager.com recruitin.nl;
+      frame-src webforms.pipedrive.com *.pipedrive.com https:;
+      frame-ancestors 'self';
+      connect-src 'self' webforms.pipedrive.com *.pipedrive.com *.google-analytics.com *.googletagmanager.com recruitin.nl https:;
       object-src 'none';
       base-uri 'self';
-      form-action 'self' webforms.pipedrive.com;
+      form-action 'self' webforms.pipedrive.com https:;
     """
 
 # Performance Headers

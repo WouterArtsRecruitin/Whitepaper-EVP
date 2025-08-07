@@ -421,7 +421,8 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
-.pipedriveWebForms.loaded::before {
+.pipedriveWebForms.loaded::before,
+.form-load-failed .pipedrive-form-container::before {
   display: none;
 }
 
@@ -461,11 +462,26 @@ body {
   display: inline-block;
 }
 
-.form-load-failed .pipedrive-form-container::before {
-  content: 'Formulier kon niet worden geladen. Gebruik de directe download hieronder.';
+.form-load-failed .pipedrive-form-container {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(244, 124, 60, 0.05);
+  border: 1px solid rgba(244, 124, 60, 0.2);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.form-load-failed .pipedrive-form-container::after {
+  content: '⚠️ Formulier kon niet worden geladen. Gebruik de directe download hieronder voor uw EVP whitepaper.';
   color: var(--recruitin-accent);
   font-weight: 600;
-  top: 30%;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-md);
 }
 
 /* Trust Indicators */
@@ -806,19 +822,21 @@ textarea:focus {
         
         // Hide loading when form is likely loaded
         setTimeout(() => {
-          loadingOverlay.style.display = 'none';
-        }, 3000);
+          if (loadingOverlay) {
+            loadingOverlay.style.display = 'none';
+          }
+        }, 2000);
       }
       
       // Pipedrive form load detection
       let formLoadTimeout = setTimeout(() => {
-        // If form doesn't load after 10 seconds, show fallback
+        // If form doesn't load after 5 seconds, show fallback
         const formCard = document.querySelector('.form-card');
         if (formCard && !document.querySelector('.pipedriveWebForms.loaded')) {
           formCard.classList.add('form-load-failed');
           console.warn('⚠️ Pipedrive form failed to load, showing fallback');
         }
-      }, 10000);
+      }, 5000);
       
       // Clear timeout if form loads successfully
       const checkFormLoad = setInterval(() => {

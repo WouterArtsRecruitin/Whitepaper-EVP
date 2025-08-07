@@ -385,181 +385,87 @@ body {
   font-size: var(--font-size-base);
 }
 
-/* Download Section */
-.download-section {
-  margin-bottom: var(--spacing-xl);
+/* Pipedrive Form Styling */
+.pipedrive-form-container {
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+  min-height: 400px;
 }
 
-.download-btn {
+.pipedriveWebForms {
+  width: 100%;
+}
+
+/* Style Pipedrive form elements to match design */
+.pipedriveWebForms iframe {
+  width: 100% !important;
+  border: none !important;
+  border-radius: var(--border-radius-md) !important;
+  min-height: 400px;
+}
+
+/* Loading state for Pipedrive form */
+.pipedrive-form-container::before {
+  content: 'Formulier wordt geladen...';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  z-index: 1;
+  background: var(--white);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+.pipedriveWebForms.loaded::before {
+  display: none;
+}
+
+/* Direct Download Button (fallback) */
+.direct-download-fallback {
+  display: none;
   width: 100%;
   background: var(--gradient-cta);
   color: var(--white);
   border: none;
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-lg);
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
   font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: 600;
   cursor: pointer;
   box-shadow: var(--shadow-cta);
   transition: all 0.3s ease;
-  margin-bottom: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  text-decoration: none;
+  text-align: center;
 }
 
-.download-btn:hover {
+.direct-download-fallback:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(244, 124, 60, 0.4);
+  color: var(--white);
+  text-decoration: none;
 }
 
-.download-btn:active {
+.direct-download-fallback:active {
   transform: translateY(0);
 }
 
-.btn-icon {
-  font-size: 1.5rem;
-  flex-shrink: 0;
+/* Show fallback if form fails to load */
+.form-load-failed .direct-download-fallback {
+  display: inline-block;
 }
 
-.btn-text {
-  text-align: left;
-  flex: 1;
-}
-
-.btn-text strong {
-  display: block;
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-  margin-bottom: 2px;
-}
-
-.btn-text small {
-  font-size: var(--font-size-sm);
-  opacity: 0.9;
-  font-weight: 400;
-}
-
-.or-divider {
-  text-align: center;
-  margin: var(--spacing-lg) 0;
-  position: relative;
-}
-
-.or-divider::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--border-light);
-  z-index: 1;
-}
-
-.or-divider span {
-  background: var(--white);
-  padding: 0 var(--spacing-md);
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  position: relative;
-  z-index: 2;
-}
-
-/* Contact Form */
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-}
-
-.form-group label {
+.form-load-failed .pipedrive-form-container::before {
+  content: 'Formulier kon niet worden geladen. Gebruik de directe download hieronder.';
+  color: var(--recruitin-accent);
   font-weight: 600;
-  color: var(--text-primary);
-  font-size: var(--font-size-sm);
-}
-
-.form-group input,
-.form-group select {
-  padding: var(--spacing-md);
-  border: 2px solid var(--border-light);
-  border-radius: var(--border-radius-md);
-  font-size: var(--font-size-base);
-  font-family: inherit;
-  transition: all 0.2s ease;
-  background: var(--white);
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--recruitin-accent);
-  box-shadow: 0 0 0 3px rgba(244, 124, 60, 0.1);
-}
-
-.submit-btn {
-  background: var(--recruitin-primary);
-  color: var(--white);
-  border: none;
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-lg);
-  font-family: inherit;
-  font-size: var(--font-size-base);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-xs);
-}
-
-.submit-btn:hover {
-  background: var(--recruitin-secondary);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-medium);
-}
-
-.submit-btn small {
-  font-size: var(--font-size-xs);
-  opacity: 0.9;
-  font-weight: 400;
-}
-
-/* Form Success State */
-.form-success {
-  background: rgba(39, 174, 96, 0.05);
-  border: 2px solid rgba(39, 174, 96, 0.2);
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-xl);
-  text-align: center;
-  color: var(--recruitin-success);
-}
-
-.form-success h4 {
-  font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-md);
-}
-
-.form-success p {
-  color: var(--text-secondary);
-  margin-bottom: var(--spacing-lg);
-}
-
-/* Loading State */
-.form-loading {
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-.form-loading .submit-btn {
-  background: var(--text-secondary);
-  cursor: not-allowed;
+  top: 30%;
 }
 
 /* Trust Indicators */
@@ -856,55 +762,22 @@ textarea:focus {
           </p>
         </div>
 
-        <!-- Direct Download Section -->
-        <div class="download-section">
-          <button id="direct-download" class="download-btn">
-            <span class="btn-icon">📥</span>
-            <span class="btn-text">
-              <strong>Direct Download</strong>
-              <small>EVP Whitepaper (PDF)</small>
-            </span>
-          </button>
-          
-          <div class="or-divider">
-            <span>of vul onderstaand formulier in voor extra insights</span>
+        <!-- Pipedrive Form -->
+        <div class="pipedrive-form-container">
+          <div class="pipedriveWebForms" 
+               data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh">
+            <script src="https://webforms.pipedrive.com/f/loader"></script>
           </div>
+          
+          <!-- Fallback Direct Download -->
+          <a href="https://recruitin.nl/wp-content/uploads/2025/06/De_verborgen_kracht_van_een_sterke_EVP-1.pdf" 
+             target="_blank" 
+             download="De_verborgen_kracht_van_een_sterke_EVP.pdf"
+             class="direct-download-fallback"
+             onclick="triggerRealPDFDownload(); return true;">
+            📥 Direct PDF Download
+          </a>
         </div>
-
-        <!-- Contact Form -->
-        <form id="contact-form" class="contact-form">
-          <div class="form-group">
-            <label for="name">Naam *</label>
-            <input type="text" id="name" name="name" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="email">E-mail *</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="company">Bedrijf</label>
-            <input type="text" id="company" name="company">
-          </div>
-          
-          <div class="form-group">
-            <label for="role">Functie</label>
-            <select id="role" name="role">
-              <option value="">Selecteer functie</option>
-              <option value="recruiter">Recruiter</option>
-              <option value="hr-manager">HR Manager</option>
-              <option value="founder-ceo">Founder/CEO</option>
-              <option value="talent-acquisition">Talent Acquisition</option>
-              <option value="anders">Anders</option>
-            </select>
-          </div>
-          
-          <button type="submit" class="submit-btn">
-            <span>Download + Ontvang Extra Insights</span>
-            <small>Inclusief exclusieve recruitment tips</small>
-          </button>
-        </form>
 
         <!-- Trust Indicators -->
         <div class="trust-indicators">
@@ -923,68 +796,43 @@ textarea:focus {
     document.addEventListener('DOMContentLoaded', function() {
       console.log('🚀 EVP Whitepaper Landing Page geladen - Recruitin');
       
-      // Direct Download Handler
-      const directDownloadBtn = document.getElementById('direct-download');
-      if (directDownloadBtn) {
-        directDownloadBtn.addEventListener('click', function() {
-          console.log('📥 Direct download triggered');
-          
-          // Track download event
-          if (typeof gtag !== 'undefined') {
-            gtag('event', 'download', {
-              'event_category': 'engagement',
-              'event_label': 'direct_download_evp_whitepaper'
-            });
-          }
-          
-          // Simulate PDF download
-          triggerWhitepaperDownload('direct');
-          
-          // Show download success message
-          showDownloadSuccess();
-        });
+      // Form Loading State
+      const formContainer = document.querySelector('.pipedrive-form-container');
+      const loadingOverlay = document.getElementById('form-loading');
+      
+      if (formContainer && loadingOverlay) {
+        // Show loading initially
+        loadingOverlay.style.display = 'flex';
+        
+        // Hide loading when form is likely loaded
+        setTimeout(() => {
+          loadingOverlay.style.display = 'none';
+        }, 3000);
       }
       
-      // Contact Form Handler
-      const contactForm = document.getElementById('contact-form');
-      if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          const formData = new FormData(contactForm);
-          const formValues = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            company: formData.get('company'),
-            role: formData.get('role')
-          };
-          
-          console.log('📧 Form submitted:', formValues);
-          
-          // Show loading state
-          contactForm.classList.add('form-loading');
-          
-          // Track form submission
-          if (typeof gtag !== 'undefined') {
-            gtag('event', 'form_submit', {
-              'event_category': 'lead_generation',
-              'event_label': 'contact_form_evp_whitepaper'
-            });
+      // Pipedrive form load detection
+      let formLoadTimeout = setTimeout(() => {
+        // If form doesn't load after 10 seconds, show fallback
+        const formCard = document.querySelector('.form-card');
+        if (formCard && !document.querySelector('.pipedriveWebForms.loaded')) {
+          formCard.classList.add('form-load-failed');
+          console.warn('⚠️ Pipedrive form failed to load, showing fallback');
+        }
+      }, 10000);
+      
+      // Clear timeout if form loads successfully
+      const checkFormLoad = setInterval(() => {
+        const iframe = document.querySelector('.pipedriveWebForms iframe');
+        if (iframe && iframe.offsetHeight > 100) {
+          clearTimeout(formLoadTimeout);
+          clearInterval(checkFormLoad);
+          const pipedriveForm = document.querySelector('.pipedriveWebForms');
+          if (pipedriveForm) {
+            pipedriveForm.classList.add('loaded');
           }
-          
-          // Simulate form processing
-          setTimeout(() => {
-            // Remove loading state
-            contactForm.classList.remove('form-loading');
-            
-            // Trigger download
-            triggerWhitepaperDownload('form', formValues);
-            
-            // Show success message
-            showFormSuccess(formValues.name);
-          }, 1500);
-        });
-      }
+          console.log('✅ Pipedrive form loaded successfully');
+        }
+      }, 1000);
       
       // Scroll-to-form functionality
       function scrollToForm() {
@@ -1048,58 +896,61 @@ textarea:focus {
         });
       }
       
-      // Form validation helpers
-      function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-      }
+      // Error handling voor Pipedrive form
+      window.addEventListener('message', function(e) {
+        // Listen for Pipedrive form events
+        if (e.data && e.data.type === 'pipedrive-form-loaded') {
+          if (loadingOverlay) {
+            loadingOverlay.style.display = 'none';
+          }
+          clearTimeout(formLoadTimeout);
+          const pipedriveForm = document.querySelector('.pipedriveWebForms');
+          if (pipedriveForm) {
+            pipedriveForm.classList.add('loaded');
+          }
+          console.log('✅ Pipedrive form loaded successfully');
+        }
+        
+        if (e.data && e.data.type === 'pipedrive-form-submitted') {
+          console.log('🎉 Form submitted successfully');
+          
+          // Track conversion
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'conversion', {
+              'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+              'event_category': 'lead_generation',
+              'event_label': 'evp_whitepaper_download'
+            });
+          }
+          
+          // Trigger real PDF download
+          triggerRealPDFDownload();
+        }
+      });
       
-      function validateForm(formData) {
-        const name = formData.get('name');
-        const email = formData.get('email');
+      // Real PDF Download Function
+      function triggerRealPDFDownload() {
+        const pdfUrl = 'https://recruitin.nl/wp-content/uploads/2025/06/De_verborgen_kracht_van_een_sterke_EVP-1.pdf';
         
-        if (!name || name.trim().length < 2) {
-          showFormError('Voer een geldige naam in (minimaal 2 karakters)');
-          return false;
+        // Create invisible link and trigger download
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.download = 'De_verborgen_kracht_van_een_sterke_EVP.pdf';
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        console.log('📄 Real PDF download triggered');
+        
+        // Track download
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'download', {
+            'event_category': 'conversion',
+            'event_label': 'evp_whitepaper_pdf_download',
+            'value': 1
+          });
         }
-        
-        if (!email || !validateEmail(email)) {
-          showFormError('Voer een geldig e-mailadres in');
-          return false;
-        }
-        
-        return true;
-      }
-      
-      function showFormError(message) {
-        // Remove existing error messages
-        const existingError = document.querySelector('.form-error');
-        if (existingError) {
-          existingError.remove();
-        }
-        
-        // Create error message
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'form-error';
-        errorDiv.style.cssText = `
-          background: rgba(231, 76, 60, 0.1);
-          color: #E74C3C;
-          padding: var(--spacing-md);
-          border-radius: var(--border-radius-md);
-          margin-bottom: var(--spacing-md);
-          font-size: var(--font-size-sm);
-          font-weight: 500;
-        `;
-        errorDiv.textContent = message;
-        
-        // Insert before submit button
-        const submitBtn = document.querySelector('.submit-btn');
-        submitBtn.parentNode.insertBefore(errorDiv, submitBtn);
-        
-        // Remove after 5 seconds
-        setTimeout(() => {
-          errorDiv.remove();
-        }, 5000);
       }
       
       // Performance monitoring
@@ -1141,82 +992,47 @@ textarea:focus {
       }, 100);
     }
     
-    // Download functionality
-    function triggerWhitepaperDownload(source, formData = null) {
-      console.log(`📥 Triggering download from: ${source}`);
-      
-      // Create a blob with whitepaper content placeholder
-      const whitepaperContent = `
-De Verborgen Kracht van een Sterke EVP
-Recruitin Whitepaper
-
-Bedankt voor uw interesse in deze whitepaper!
-
-Deze demo toont de download functionaliteit.
-In productie zou hier de daadwerkelijke PDF worden gedownload.
-
-${formData ? `Geregistreerd voor: ${formData.name} (${formData.email})` : 'Direct download'}
-
-Contacteer Recruitin voor de volledige whitepaper.
-`;
-      
-      const blob = new Blob([whitepaperContent], { type: 'text/plain' });
-      const url = window.URL.createObjectURL(blob);
-      
-      // Create download link
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'EVP-Whitepaper-Recruitin.txt';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // Clean up
-      setTimeout(() => {
-        window.URL.revokeObjectURL(url);
-      }, 100);
-      
-      // Track conversion
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'conversion', {
-          'event_category': 'lead_generation',
-          'event_label': `evp_whitepaper_download_${source}`,
-          'value': 1
-        });
+    // Enhanced Pipedrive form handling
+    window.addEventListener('message', function(e) {
+      // Listen for Pipedrive form events
+      if (e.data && e.data.type === 'pipedrive-form-loaded') {
+        const formContainer = document.querySelector('.pipedrive-form-container');
+        if (formContainer) {
+          formContainer.classList.add('loaded');
+        }
+        console.log('✅ Pipedrive form loaded successfully');
       }
-    }
+      
+      if (e.data && e.data.type === 'pipedrive-form-submitted') {
+        console.log('🎉 Form submitted successfully');
+        
+        // Track conversion
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'conversion', {
+            'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+            'event_category': 'lead_generation',
+            'event_label': 'evp_whitepaper_download'
+          });
+        }
+        
+        // Trigger real PDF download and show success message
+        triggerRealPDFDownload();
+        showPipedriveSuccessMessage();
+      }
+    });
     
-    function showDownloadSuccess() {
-      const downloadBtn = document.getElementById('direct-download');
-      const originalContent = downloadBtn.innerHTML;
-      
-      downloadBtn.innerHTML = `
-        <span class="btn-icon">✅</span>
-        <span class="btn-text">
-          <strong>Download Gestart!</strong>
-          <small>Controleer uw downloads</small>
-        </span>
-      `;
-      
-      downloadBtn.style.background = 'var(--recruitin-success)';
-      
-      setTimeout(() => {
-        downloadBtn.innerHTML = originalContent;
-        downloadBtn.style.background = 'var(--gradient-cta)';
-      }, 3000);
-    }
-    
-    function showFormSuccess(name) {
+    // Show success message for Pipedrive form
+    function showPipedriveSuccessMessage() {
       const formCard = document.querySelector('.form-card');
       const originalContent = formCard.innerHTML;
       
       formCard.innerHTML = `
-        <div class="form-success">
+        <div class="thank-you-message" style="text-align: center; padding: var(--spacing-xl);">
           <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">🎉</div>
-          <h4>Bedankt ${name}!</h4>
-          <p>Uw whitepaper is gedownload en u ontvangt binnenkort exclusieve recruitment insights per email.</p>
+          <h3 style="color: var(--recruitin-primary); margin-bottom: var(--spacing-md);">Bedankt voor uw interesse!</h3>
+          <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">De EVP whitepaper wordt nu gedownload. U ontvangt binnenkort ook exclusieve recruitment insights per email van Recruitin.</p>
           <div class="trust-indicators">
-            <div class="trust-item">✅ Download voltooid</div>
+            <div class="trust-item">✅ PDF wordt gedownload</div>
             <div class="trust-item">📧 Email bevestiging volgt</div>
             <div class="trust-item">🔒 Gegevens veilig opgeslagen</div>
           </div>
@@ -1226,35 +1042,11 @@ Contacteer Recruitin voor de volledige whitepaper.
       // Reset after 8 seconds
       setTimeout(() => {
         formCard.innerHTML = originalContent;
-        
-        // Reinitialize form handlers
-        const newContactForm = document.getElementById('contact-form');
-        const newDirectDownloadBtn = document.getElementById('direct-download');
-        
-        if (newContactForm) {
-          initializeContactForm(newContactForm);
-        }
-        
-        if (newDirectDownloadBtn) {
-          initializeDirectDownload(newDirectDownloadBtn);
+        // Reinitialize Pipedrive form
+        if (window.pipedriveWebFormLoader) {
+          window.pipedriveWebFormLoader.load();
         }
       }, 8000);
-    }
-    
-    // Helper functions for reinitializing handlers
-    function initializeContactForm(form) {
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(form);
-        handleFormSubmission(formData);
-      });
-    }
-    
-    function initializeDirectDownload(btn) {
-      btn.addEventListener('click', function() {
-        triggerWhitepaperDownload('direct');
-        showDownloadSuccess();
-      });
     }
   </script>
 

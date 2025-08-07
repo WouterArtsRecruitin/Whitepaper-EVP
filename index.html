@@ -841,8 +841,10 @@ textarea:focus {
           <div class="pipedriveWebForms" 
                data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh"
                id="pipedrive-form">
-            <script src="https://webforms.pipedrive.com/f/loader"></script>
           </div>
+          
+          <!-- Pipedrive Loader Script -->
+          <script src="https://webforms.pipedrive.com/f/loader" async></script>
           
           <!-- Fallback message if form fails to load -->
           <div class="form-error-state" id="error-message" style="display: none;">
@@ -923,12 +925,24 @@ textarea:focus {
             return;
           }
           
-          // Check for any Pipedrive elements
-          const pipedriveElements = document.querySelectorAll('[class*=\"pipedrive\"], [id*=\"pipedrive\"]');
-          if (pipedriveElements.length > 1) { // More than just our container
-            console.log('✅ Pipedrive form detected via element check');
+          // Check for Pipedrive form elements
+          const pipedriveForm = document.querySelector('.pipedriveWebForms form');
+          const pipedriveInputs = document.querySelectorAll('.pipedriveWebForms input, .pipedriveWebForms select, .pipedriveWebForms button');
+          
+          if (pipedriveForm || pipedriveInputs.length > 0) {
+            console.log('✅ Pipedrive form detected via form elements');
             handleFormLoadSuccess();
             return;
+          }
+          
+          // Check if Pipedrive loader has initialized
+          if (window.pipedriveWebFormLoader || window.PipedriveWebForms) {
+            const pipedriveContainer = document.querySelector('#pipedrive-form');
+            if (pipedriveContainer && pipedriveContainer.children.length > 0) {
+              console.log('✅ Pipedrive form detected via loader check');
+              handleFormLoadSuccess();
+              return;
+            }
           }
           
           if (checkCount >= maxChecks) {
@@ -968,18 +982,33 @@ textarea:focus {
         if (formLoadAttempts < maxLoadAttempts) {
           console.log(`🔄 Retrying form load (${formLoadAttempts + 1}/${maxLoadAttempts})`);
           setTimeout(() => {
-            // Try to reinitialize the form
-            const script = document.querySelector('script[src*=\"pipedrive\"]');
-            if (script) {
-              script.remove();
+            // Clear any existing Pipedrive content
+            const pipedriveDiv = document.getElementById('pipedrive-form');
+            if (pipedriveDiv) {
+              pipedriveDiv.innerHTML = '';
+              pipedriveDiv.classList.remove('loaded');
             }
             
-            // Add new script
-            const newScript = document.createElement('script');
-            newScript.src = 'https://webforms.pipedrive.com/f/loader';
-            document.head.appendChild(newScript);
+            // Remove existing script
+            const existingScripts = document.querySelectorAll('script[src*=\"pipedrive\"]');
+            existingScripts.forEach(script => script.remove());
             
-            setTimeout(() => initializePipedriveForm(), 1000);
+            // Add fresh script with cache busting
+            const newScript = document.createElement('script');
+            newScript.src = 'https://webforms.pipedrive.com/f/loader?t=' + Date.now();
+            newScript.async = true;
+            newScript.onload = () => {
+              console.log('🔄 Pipedrive script reloaded');
+              // Force re-initialization after script loads
+              setTimeout(() => {
+                if (window.pipedriveWebFormLoader) {
+                  window.pipedriveWebFormLoader.load();
+                }
+              }, 500);
+            };
+            document.body.appendChild(newScript);
+            
+            setTimeout(() => initializePipedriveForm(), 2000);
           }, 2000);
         } else {
           console.error('💥 All form load attempts failed, showing error state');

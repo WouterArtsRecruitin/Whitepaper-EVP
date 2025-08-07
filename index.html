@@ -385,188 +385,44 @@ body {
   font-size: var(--font-size-base);
 }
 
-/* Simple Contact Form Styling */
-.simple-contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-xl);
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-md);
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-}
-
-.form-group label {
-  font-weight: 600;
-  color: var(--text-primary);
-  font-size: var(--font-size-sm);
-}
-
-.form-group input,
-.form-group select {
-  padding: var(--spacing-md);
-  border: 2px solid var(--border-light);
-  border-radius: var(--border-radius-md);
-  font-size: var(--font-size-base);
-  font-family: inherit;
-  transition: all 0.2s ease;
-  background: var(--white);
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--recruitin-accent);
-  box-shadow: 0 0 0 3px rgba(244, 124, 60, 0.1);
-}
-
-.download-submit-btn {
-  background: var(--gradient-cta);
-  color: var(--white);
-  border: none;
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-lg);
-  font-family: inherit;
-  cursor: pointer;
-  box-shadow: var(--shadow-cta);
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-md);
-}
-
-.download-submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(244, 124, 60, 0.4);
-}
-
-.download-submit-btn:active {
-  transform: translateY(0);
-}
-
-.download-submit-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btn-icon {
-  font-size: 1.25rem;
-}
-
-.btn-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.btn-content strong {
-  font-size: var(--font-size-base);
-  font-weight: 700;
-}
-
-.btn-content small {
-  font-size: var(--font-size-xs);
-  opacity: 0.9;
-  font-weight: 400;
-}
-
-/* Or Separator */
-.or-separator {
-  text-align: center;
-  margin: var(--spacing-lg) 0;
+/* Pipedrive Form Styling */
+.pipedrive-form-container {
+  margin-bottom: var(--spacing-lg);
   position: relative;
+  min-height: 400px;
 }
 
-.or-separator::before {
-  content: '';
+.pipedriveWebForms {
+  width: 100%;
+}
+
+/* Style Pipedrive form elements to match design */
+.pipedriveWebForms iframe {
+  width: 100% !important;
+  border: none !important;
+  border-radius: var(--border-radius-md) !important;
+  min-height: 400px;
+}
+
+/* Loading state for Pipedrive form */
+.pipedrive-form-container::before {
+  content: 'Formulier wordt geladen...';
   position: absolute;
   top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--border-light);
-  z-index: 1;
-}
-
-.or-separator span {
-  background: var(--white);
-  padding: 0 var(--spacing-md);
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  position: relative;
-  z-index: 2;
-}
-
-/* Direct Download Link */
-.direct-download-link {
-  display: block;
-  width: 100%;
-  background: var(--recruitin-primary);
-  color: var(--white);
-  text-decoration: none;
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-lg);
-  text-align: center;
   font-size: var(--font-size-base);
-  font-weight: 600;
-  transition: all 0.3s ease;
-  margin-bottom: var(--spacing-lg);
+  font-weight: 500;
+  z-index: 1;
+  background: var(--white);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-soft);
 }
 
-.direct-download-link:hover {
-  background: var(--recruitin-secondary);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-medium);
-  color: var(--white);
-  text-decoration: none;
-}
-
-.direct-download-link:active {
-  transform: translateY(0);
-}
-
-/* Success State */
-.form-success {
-  background: rgba(39, 174, 96, 0.05);
-  border: 2px solid rgba(39, 174, 96, 0.2);
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-xl);
-  text-align: center;
-  color: var(--recruitin-success);
-}
-
-.form-success h4 {
-  color: var(--recruitin-success);
-  font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-md);
-}
-
-.form-success p {
-  color: var(--text-secondary);
-  margin-bottom: var(--spacing-lg);
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .btn-content {
-    text-align: center;
-  }
+.pipedriveWebForms.loaded::before {
+  display: none;
 }
 
 /* Trust Indicators */
@@ -863,61 +719,13 @@ textarea:focus {
           </p>
         </div>
 
-        <!-- Simple Contact Form -->
-        <form id="contact-form" class="simple-contact-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="firstName">Voornaam *</label>
-              <input type="text" id="firstName" name="firstName" required>
-            </div>
-            <div class="form-group">
-              <label for="lastName">Achternaam *</label>
-              <input type="text" id="lastName" name="lastName" required>
-            </div>
+        <!-- Pipedrive Form -->
+        <div class="pipedrive-form-container">
+          <div class="pipedriveWebForms" 
+               data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh">
+            <script src="https://webforms.pipedrive.com/f/loader"></script>
           </div>
-          
-          <div class="form-group">
-            <label for="email">E-mailadres *</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="company">Bedrijfsnaam</label>
-            <input type="text" id="company" name="company">
-          </div>
-          
-          <div class="form-group">
-            <label for="role">Functie</label>
-            <select id="role" name="role">
-              <option value="">Selecteer functie</option>
-              <option value="recruiter">Recruiter</option>
-              <option value="hr-manager">HR Manager</option>
-              <option value="talent-acquisition">Talent Acquisition</option>
-              <option value="founder-ceo">Founder/CEO</option>
-              <option value="anders">Anders</option>
-            </select>
-          </div>
-          
-          <button type="submit" class="download-submit-btn" id="submit-btn">
-            <span class="btn-icon">📥</span>
-            <span class="btn-content">
-              <strong>Download EVP Whitepaper</strong>
-              <small>Direct na invulling beschikbaar</small>
-            </span>
-          </button>
-        </form>
-        
-        <!-- Alternative: Direct Download -->
-        <div class="or-separator">
-          <span>Of download direct zonder gegevens</span>
         </div>
-        
-        <a href="https://recruitin.nl/wp-content/uploads/2025/06/De_verborgen_kracht_van_een_sterke_EVP-1.pdf" 
-           target="_blank" 
-           download="De_verborgen_kracht_van_een_sterke_EVP.pdf"
-           class="direct-download-link">
-          📄 Direct PDF Download
-        </a>
 
         <!-- Trust Indicators -->
         <div class="trust-indicators">
@@ -936,119 +744,65 @@ textarea:focus {
     document.addEventListener('DOMContentLoaded', function() {
       console.log('🚀 EVP Whitepaper Landing Page geladen - Recruitin');
       
-      // Contact Form Handler
-      const contactForm = document.getElementById('contact-form');
-      const submitBtn = document.getElementById('submit-btn');
+      // Form Loading State
+      const formContainer = document.querySelector('.pipedrive-form-container');
+      const loadingOverlay = document.getElementById('form-loading');
       
-      if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          const formData = new FormData(contactForm);
-          const formValues = {
-            firstName: formData.get('firstName'),
-            lastName: formData.get('lastName'),
-            email: formData.get('email'),
-            company: formData.get('company'),
-            role: formData.get('role')
-          };
-          
-          // Validate form
-          if (!validateFormData(formValues)) {
-            return;
+      if (formContainer && loadingOverlay) {
+        // Show loading initially
+        loadingOverlay.style.display = 'flex';
+        
+        // Hide loading when form is likely loaded
+        setTimeout(() => {
+          if (loadingOverlay) {
+            loadingOverlay.style.display = 'none';
           }
+        }, 3000);
+      }
+      
+      // Enhanced Pipedrive form detection
+      let formLoadTimeout = setTimeout(() => {
+        // Check if form iframe loaded
+        const iframe = document.querySelector('.pipedriveWebForms iframe');
+        if (iframe && iframe.offsetHeight > 100) {
+          const pipedriveForm = document.querySelector('.pipedriveWebForms');
+          if (pipedriveForm) {
+            pipedriveForm.classList.add('loaded');
+          }
+          console.log('✅ Pipedrive form loaded successfully');
+        }
+      }, 5000);
+      
+      // Listen for Pipedrive form events
+      window.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'pipedrive-form-loaded') {
+          clearTimeout(formLoadTimeout);
+          const pipedriveForm = document.querySelector('.pipedriveWebForms');
+          if (pipedriveForm) {
+            pipedriveForm.classList.add('loaded');
+          }
+          console.log('✅ Pipedrive form loaded via message');
+        }
+        
+        if (e.data && e.data.type === 'pipedrive-form-submitted') {
+          console.log('🎉 Pipedrive form submitted successfully');
           
-          console.log('📝 Form submitted:', formValues);
-          
-          // Show loading state
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = `
-            <span class="btn-icon">⏳</span>
-            <span class="btn-content">
-              <strong>Bezig met verwerken...</strong>
-              <small>Even geduld alstublieft</small>
-            </span>
-          `;
-          
-          // Track form submission
+          // Track conversion
           if (typeof gtag !== 'undefined') {
-            gtag('event', 'form_submit', {
+            gtag('event', 'conversion', {
+              'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
               'event_category': 'lead_generation',
-              'event_label': 'contact_form_evp_whitepaper',
-              'custom_parameters': {
-                'company': formValues.company || 'Not provided',
-                'role': formValues.role || 'Not provided'
-              }
+              'event_label': 'evp_whitepaper_download'
             });
           }
           
-          // Simulate form processing (in real implementation, send to server)
-          setTimeout(() => {
-            // Trigger PDF download
-            triggerRealPDFDownload();
-            
-            // Show success message
-            showFormSuccess(formValues.firstName);
-          }, 2000);
-        });
-      }
-      
-      // Form validation
-      function validateFormData(data) {
-        // Clear previous errors
-        clearFormErrors();
-        
-        let isValid = true;
-        
-        if (!data.firstName || data.firstName.trim().length < 2) {
-          showFieldError('firstName', 'Voornaam is verplicht (minimaal 2 karakters)');
-          isValid = false;
-        }
-        
-        if (!data.lastName || data.lastName.trim().length < 2) {
-          showFieldError('lastName', 'Achternaam is verplicht (minimaal 2 karakters)');
-          isValid = false;
-        }
-        
-        if (!data.email || !validateEmail(data.email)) {
-          showFieldError('email', 'Voer een geldig e-mailadres in');
-          isValid = false;
-        }
-        
-        return isValid;
-      }
-      
-      function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-      }
-      
-      function showFieldError(fieldId, message) {
-        const field = document.getElementById(fieldId);
-        if (field) {
-          field.style.borderColor = '#E74C3C';
+          // Trigger PDF download
+          triggerRealPDFDownload();
           
-          // Create error message
-          const errorSpan = document.createElement('span');
-          errorSpan.className = 'field-error';
-          errorSpan.textContent = message;
-          errorSpan.style.cssText = 'color: #E74C3C; font-size: 12px; margin-top: 4px;';
-          
-          field.parentNode.appendChild(errorSpan);
+          // Show success message
+          showPipedriveSuccessMessage();
         }
-      }
-      
-      function clearFormErrors() {
-        // Reset field borders
-        const inputs = contactForm.querySelectorAll('input, select');
-        inputs.forEach(input => {
-          input.style.borderColor = '';
-        });
-        
-        // Remove error messages
-        const errors = contactForm.querySelectorAll('.field-error');
-        errors.forEach(error => error.remove());
-      }
+      });
       
       // Scroll-to-form functionality
       function scrollToForm() {
@@ -1137,16 +891,16 @@ textarea:focus {
         }
       }
       
-      // Show success message after form submission
-      function showFormSuccess(firstName) {
+      // Show success message for Pipedrive form
+      function showPipedriveSuccessMessage() {
         const formCard = document.querySelector('.form-card');
         const originalContent = formCard.innerHTML;
         
         formCard.innerHTML = `
-          <div class="form-success">
+          <div class="thank-you-message" style="text-align: center; padding: var(--spacing-xl);">
             <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">🎉</div>
-            <h4>Bedankt ${firstName}!</h4>
-            <p>De EVP whitepaper wordt nu gedownload. U ontvangt binnenkort ook exclusieve recruitment insights per email van Recruitin.</p>
+            <h3 style="color: var(--recruitin-primary); margin-bottom: var(--spacing-md);">Bedankt voor uw interesse!</h3>
+            <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">De EVP whitepaper wordt nu gedownload. U ontvangt binnenkort ook exclusieve recruitment insights per email van Recruitin.</p>
             <div class="trust-indicators">
               <div class="trust-item">✅ PDF wordt gedownload</div>
               <div class="trust-item">📧 Email bevestiging volgt</div>
@@ -1155,35 +909,14 @@ textarea:focus {
           </div>
         `;
         
-        // Track successful conversion
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'conversion', {
-            'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
-            'event_category': 'lead_generation',
-            'event_label': 'evp_whitepaper_download_success',
-            'value': 1
-          });
-        }
-        
         // Reset after 8 seconds
         setTimeout(() => {
           formCard.innerHTML = originalContent;
-          
-          // Reinitialize form
-          const newContactForm = document.getElementById('contact-form');
-          if (newContactForm) {
-            initializeContactForm(newContactForm);
+          // Reinitialize Pipedrive form
+          if (window.pipedriveWebFormLoader) {
+            window.pipedriveWebFormLoader.load();
           }
         }, 8000);
-      }
-      
-      // Reinitialize contact form after reset
-      function initializeContactForm(form) {
-        form.addEventListener('submit', function(e) {
-          e.preventDefault();
-          // Reuse the same form submission logic
-          contactForm.dispatchEvent(new Event('submit'));
-        });
       }
       
       // Performance monitoring
@@ -1225,22 +958,21 @@ textarea:focus {
       }, 100);
     }
     
-    // Direct download link handler
-    const directDownloadLinks = document.querySelectorAll('.direct-download-link');
-    directDownloadLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        console.log('📄 Direct download clicked');
-        
-        // Track direct download
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'download', {
-            'event_category': 'engagement',
-            'event_label': 'direct_download_evp_whitepaper',
-            'value': 1
-          });
+    // Additional Pipedrive form enhancements
+    // Force form to load if still not loaded after 10 seconds
+    setTimeout(() => {
+      const pipedriveForm = document.querySelector('.pipedriveWebForms');
+      const iframe = document.querySelector('.pipedriveWebForms iframe');
+      
+      if (pipedriveForm && !pipedriveForm.classList.contains('loaded')) {
+        if (iframe && iframe.offsetHeight > 50) {
+          pipedriveForm.classList.add('loaded');
+          console.log('✅ Pipedrive form loaded (fallback detection)');
+        } else {
+          console.warn('⚠️ Pipedrive form may have loading issues');
         }
-      });
-    });
+      }
+    }, 10000);
   </script>
 
   <!-- Optional: Google Analytics / Tag Manager -->

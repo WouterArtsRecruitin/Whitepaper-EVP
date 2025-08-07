@@ -945,9 +945,18 @@ body {
   <script>
     // Initialize form
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('🎯 EVP FORM INITIALIZING...');
+      
       const form = document.getElementById('download-form');
       const loadingOverlay = document.getElementById('form-loading');
       const successMessage = document.getElementById('success-message');
+      
+      if (!form) {
+        console.error('❌ Form element not found!');
+        return;
+      }
+      
+      console.log('✅ Form element found, adding event listener');
       
       form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -1081,7 +1090,7 @@ body {
       return sendToPipedriveForm(testData);
     };
     
-    console.log('🚀 Debug function loaded. Type testPipedrive() in console to test.');
+    console.log('🚀 EVP WEBSITE LOADED - Debug function available: testPipedrive()');
   </script>
 </body>
 </html>

@@ -1195,48 +1195,48 @@ textarea:focus {
         }
       });
       
-      // Send data to Pipedrive using WebForms API
+      // Send data to Pipedrive using direct form manipulation
       function sendToPipedriveForm(formData) {
         try {
-          // Use Pipedrive WebForms API
-          if (window.pipedriveWebForms && typeof window.pipedriveWebForms.submit === 'function') {
-            window.pipedriveWebForms.submit({
-              webFormId: '6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh',
-              data: {
-                name: formData.name || '',
-                email: formData.email || '',
-                company: formData.company || '',
-                job_title: formData.role || '',
-                source: 'EVP Whitepaper Landing Page'
+          // Wait for Pipedrive form to load
+          setTimeout(() => {
+            const pipedriveForm = document.querySelector('.pipedriveWebForms iframe');
+            if (pipedriveForm && pipedriveForm.contentDocument) {
+              const formDoc = pipedriveForm.contentDocument;
+              const nameField = formDoc.querySelector('input[name="name"]') || formDoc.querySelector('input[type="text"]');
+              const emailField = formDoc.querySelector('input[name="email"]') || formDoc.querySelector('input[type="email"]');
+              const companyField = formDoc.querySelector('input[name="company"]');
+              const submitBtn = formDoc.querySelector('button[type="submit"]') || formDoc.querySelector('input[type="submit"]');
+              
+              if (nameField) nameField.value = formData.name;
+              if (emailField) emailField.value = formData.email;
+              if (companyField) companyField.value = formData.company;
+              
+              if (submitBtn) {
+                submitBtn.click();
+                console.log('📤 Pipedrive form submitted via iframe:', formData);
+                return true;
               }
-            });
-            console.log('📤 Lead data sent to Pipedrive via WebForms API:', formData);
-            return true;
-          }
-          
-          // Fallback: Programmatic form submission
-          const pipedriveContainer = document.querySelector('.pipedriveWebForms');
-          if (pipedriveContainer) {
-            // Trigger Pipedrive form to populate with our data
-            const event = new CustomEvent('pipedriveSubmit', {
-              detail: {
+            }
+            
+            // Fallback: Try global Pipedrive API
+            if (window.LeadBooster && window.LeadBooster.submit) {
+              window.LeadBooster.submit({
                 name: formData.name,
                 email: formData.email,
                 company: formData.company,
-                job_title: formData.role,
-                source: 'EVP Whitepaper Landing Page'
-              }
-            });
-            pipedriveContainer.dispatchEvent(event);
-            console.log('📤 Pipedrive event dispatched:', formData);
-            return true;
-          }
+                job_title: formData.role
+              });
+              console.log('📤 Submitted via LeadBooster API:', formData);
+              return true;
+            }
+          }, 1000);
           
-          return false;
+          return true;
         } catch (error) {
           console.error('❌ Failed to send lead to Pipedrive:', error);
           
-          // Fallback: Store locally for manual processing
+          // Store locally for manual processing
           const leads = JSON.parse(localStorage.getItem('pendingLeads') || '[]');
           leads.push({
             ...formData,

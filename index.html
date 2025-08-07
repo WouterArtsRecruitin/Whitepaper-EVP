@@ -837,10 +837,17 @@ body {
             
             <div class="form-row">
               <div class="form-group">
-                <label for="company">Bedrijf</label>
-                <input type="text" id="company" name="company">
+                <label for="phone">Telefoonnummer *</label>
+                <input type="tel" id="phone" name="phone" placeholder="+31 6 12345678" required>
               </div>
               
+              <div class="form-group">
+                <label for="company">Bedrijf *</label>
+                <input type="text" id="company" name="company" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
               <div class="form-group">
                 <label for="role">Functie</label>
                 <select id="role" name="role">
@@ -851,6 +858,10 @@ body {
                   <option value="ceo">CEO/Founder</option>
                   <option value="anders">Anders</option>
                 </select>
+              </div>
+              
+              <div class="form-group">
+                <!-- Empty space for symmetry -->
               </div>
             </div>
             
@@ -946,6 +957,7 @@ body {
         const data = {
           name: formData.get('name'),
           email: formData.get('email'),
+          phone: formData.get('phone'),
           company: formData.get('company'),
           role: formData.get('role')
         };
@@ -984,11 +996,13 @@ body {
             const formDoc = pipedriveForm.contentDocument;
             const nameField = formDoc.querySelector('input[name="name"]') || formDoc.querySelector('input[type="text"]');
             const emailField = formDoc.querySelector('input[name="email"]') || formDoc.querySelector('input[type="email"]');
+            const phoneField = formDoc.querySelector('input[name="phone"]') || formDoc.querySelector('input[type="tel"]');
             const companyField = formDoc.querySelector('input[name="company"]');
             const submitBtn = formDoc.querySelector('button[type="submit"]') || formDoc.querySelector('input[type="submit"]');
             
             if (nameField) nameField.value = formData.name;
             if (emailField) emailField.value = formData.email;
+            if (phoneField) phoneField.value = formData.phone;
             if (companyField) companyField.value = formData.company;
             
             if (submitBtn) {
@@ -1003,6 +1017,7 @@ body {
             window.LeadBooster.submit({
               name: formData.name,
               email: formData.email,
+              phone: formData.phone,
               company: formData.company,
               job_title: formData.role
             });

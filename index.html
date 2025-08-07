@@ -77,10 +77,11 @@ body {
 .hero-section {
   background: var(--gradient-hero);
   color: var(--white);
-  padding: var(--spacing-2xl) 0;
+  padding: var(--spacing-2xl) 0 120px 0;
   text-align: center;
   position: relative;
   overflow: hidden;
+  min-height: 600px;
 }
 
 .hero-section::before {
@@ -91,8 +92,8 @@ body {
   right: 0;
   bottom: 0;
   background-image: 
-    radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -176,16 +177,17 @@ body {
 
 /* Main Content */
 .main-content {
-  margin-top: -60px;
+  margin-top: -80px;
   position: relative;
   z-index: 10;
 }
 
 .content-grid {
   display: grid;
-  grid-template-columns: 1fr 400px;
+  grid-template-columns: 1fr;
   gap: var(--spacing-xl);
-  align-items: start;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 /* Whitepaper Card */
@@ -259,6 +261,17 @@ body {
   width: 20px;
 }
 
+/* Form Section */
+.form-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: var(--spacing-2xl) 0;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 /* Form Card */
 .form-card {
   background: var(--white);
@@ -266,6 +279,12 @@ body {
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-xl);
   position: relative;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
 }
 
 .form-header {
@@ -319,9 +338,9 @@ body {
   background: var(--gradient-cta);
   color: var(--white);
   border: none;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-xl);
   border-radius: var(--radius-md);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -329,11 +348,14 @@ body {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  box-shadow: 0 4px 12px rgba(244, 124, 60, 0.3);
 }
 
 .download-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(244, 124, 60, 0.4);
+  background: linear-gradient(135deg, #e6672d 0%, #d85a26 100%);
 }
 
 .download-btn:disabled {
@@ -381,8 +403,10 @@ body {
 
 .benefits-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-xl);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .benefit-card {
@@ -608,6 +632,11 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .hero-section {
+    padding: var(--spacing-xl) 0 80px 0;
+    min-height: 500px;
+  }
+  
   .content-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
@@ -629,7 +658,16 @@ body {
     text-align: center;
   }
   
-  .benefits-grid,
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  
   .tools-grid {
     grid-template-columns: 1fr;
   }
@@ -701,7 +739,7 @@ body {
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Content - Whitepaper Preview -->
   <main class="main-content">
     <div class="container">
       <div class="content-grid">
@@ -726,17 +764,55 @@ body {
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </main>
 
-        <!-- Form Card -->
+  <!-- Benefits Section -->
+  <section class="benefits-section">
+    <div class="container">
+      <h2 class="benefits-title">⚡ Waarom is een Sterke EVP Cruciaal?</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <span class="benefit-icon">🎯</span>
+          <h3 class="benefit-title">86% Meer Kwaliteit Sollicitanten</h3>
+          <p class="benefit-description">
+            Een heldere EVP trekt automatisch de juiste kandidaten aan en filtert ongeschikte sollicitanten eruit. Verhoog de match-kwaliteit drastisch.
+          </p>
+        </div>
+        
+        <div class="benefit-card">
+          <span class="benefit-icon">⚡</span>
+          <h3 class="benefit-title">3.2x Snellere Time-to-Fill</h3>
+          <p class="benefit-description">
+            Bedrijven met een sterke EVP vullen hun technische vacatures 3.2x sneller in. Van 8 weken naar 2-3 weken gemiddeld.
+          </p>
+        </div>
+        
+        <div class="benefit-card">
+          <span class="benefit-icon">💰</span>
+          <h3 class="benefit-title">50% Lagere Recruitment Kosten</h3>
+          <p class="benefit-description">
+            Verminder cost-per-hire dramatisch door betere targeting, hogere conversie rates en minder extern recruitment agency gebruik.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Form Section - Central Position -->
+  <section class="form-section">
+    <div class="container">
+      <div class="form-container">
         <div class="form-card">
           <div class="loading-overlay" id="form-loading">
             <div class="loading-spinner"></div>
           </div>
           
           <div class="form-header">
-            <h3 class="form-title">Download Nu Uw Whitepaper</h3>
+            <h3 class="form-title">📥 Download Nu de Complete EVP Gids</h3>
             <p class="form-subtitle">
-              Vul onderstaand formulier in en ontvang direct toegang tot deze exclusieve expertise van Recruitin.
+              Ontvang direct toegang tot praktische strategieën, templates en case studies die je recruitment succesvol maken.
             </p>
           </div>
 
@@ -747,36 +823,40 @@ body {
 
           <!-- Custom Form -->
           <form id="download-form" class="download-form">
-            <div class="form-group">
-              <label for="name">Volledige naam *</label>
-              <input type="text" id="name" name="name" required>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Volledige naam *</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="email">E-mailadres *</label>
+                <input type="email" id="email" name="email" required>
+              </div>
             </div>
             
-            <div class="form-group">
-              <label for="email">E-mailadres *</label>
-              <input type="email" id="email" name="email" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="company">Bedrijf</label>
-              <input type="text" id="company" name="company">
-            </div>
-            
-            <div class="form-group">
-              <label for="role">Functie</label>
-              <select id="role" name="role">
-                <option value="">Selecteer functie</option>
-                <option value="recruiter">Recruiter</option>
-                <option value="hr-manager">HR Manager</option>
-                <option value="talent-acquisition">Talent Acquisition</option>
-                <option value="ceo">CEO/Founder</option>
-                <option value="anders">Anders</option>
-              </select>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="company">Bedrijf</label>
+                <input type="text" id="company" name="company">
+              </div>
+              
+              <div class="form-group">
+                <label for="role">Functie</label>
+                <select id="role" name="role">
+                  <option value="">Selecteer functie</option>
+                  <option value="recruiter">Recruiter</option>
+                  <option value="hr-manager">HR Manager</option>
+                  <option value="talent-acquisition">Talent Acquisition</option>
+                  <option value="ceo">CEO/Founder</option>
+                  <option value="anders">Anders</option>
+                </select>
+              </div>
             </div>
             
             <button type="submit" class="download-btn" id="download-btn">
-              <span>📥</span>
-              <span>Download EVP Whitepaper</span>
+              <span>🚀</span>
+              <span>Download EVP Whitepaper Gratis</span>
             </button>
           </form>
 
@@ -798,46 +878,6 @@ body {
               📅 Plan Gratis Consultatiegesprek
             </a>
           </div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Benefits Section -->
-  <section class="benefits-section">
-    <div class="container">
-      <h2 class="benefits-title">⚡ Waarom is een Sterke EVP Cruciaal?</h2>
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <span class="benefit-icon">🎯</span>
-          <h3 class="benefit-title">Aantrekken Top-Talent</h3>
-          <p class="benefit-description">
-            Een heldere EVP trekt automatisch de juiste kandidaten aan en filtert ongeschikte sollicitanten eruit. Verhoog je kwaliteit van applicaties met 67%.
-          </p>
-        </div>
-        
-        <div class="benefit-card">
-          <span class="benefit-icon">⚡</span>
-          <h3 class="benefit-title">Snellere Vacature Invulling</h3>
-          <p class="benefit-description">
-            Bedrijven met een sterke EVP vullen hun technische vacatures 3.2x sneller in. Bespaar weken aan recruitment tijd per positie.
-          </p>
-        </div>
-        
-        <div class="benefit-card">
-          <span class="benefit-icon">💰</span>
-          <h3 class="benefit-title">Lagere Recruitment Kosten</h3>
-          <p class="benefit-description">
-            Verminder je cost-per-hire met tot 50% door betere targeting en hogere conversie rates van kandidaten naar hired professionals.
-          </p>
-        </div>
-        
-        <div class="benefit-card">
-          <span class="benefit-icon">🔒</span>
-          <h3 class="benefit-title">Verhoogde Retentie</h3>
-          <p class="benefit-description">
-            Medewerkers die zich identificeren met je EVP blijven 89% langer bij je bedrijf. Investeer in behoud in plaats van vervanging.
-          </p>
         </div>
       </div>
     </div>

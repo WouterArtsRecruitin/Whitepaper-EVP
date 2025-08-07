@@ -816,60 +816,22 @@ body {
             </p>
           </div>
 
-          <!-- Pipedrive WebForms Integration -->
-          <div class="pipedriveWebForms" data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh" style="display: none;">
+          <!-- Direct Pipedrive WebForm Embed -->
+          <div class="pipedriveWebForms" data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh">
             <script src="https://webforms.pipedrive.com/f/loader"></script>
           </div>
 
-          <!-- Custom Form -->
-          <form id="download-form" class="download-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name">Volledige naam *</label>
-                <input type="text" id="name" name="name" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="email">E-mailadres *</label>
-                <input type="email" id="email" name="email" required>
-              </div>
+          <!-- Download trigger for after form submission -->
+          <div class="download-trigger" style="display: none;">
+            <div class="download-info">
+              <h4>✅ Formulier verzonden!</h4>
+              <p>Je download start automatisch...</p>
+              <button onclick="startDownload()" class="download-btn">
+                <span>📥</span>
+                <span>Download Nu</span>
+              </button>
             </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label for="phone">Telefoonnummer *</label>
-                <input type="tel" id="phone" name="phone" placeholder="+31 6 12345678" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="company">Bedrijf *</label>
-                <input type="text" id="company" name="company" required>
-              </div>
-            </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label for="role">Functie</label>
-                <select id="role" name="role">
-                  <option value="">Selecteer functie</option>
-                  <option value="recruiter">Recruiter</option>
-                  <option value="hr-manager">HR Manager</option>
-                  <option value="talent-acquisition">Talent Acquisition</option>
-                  <option value="ceo">CEO/Founder</option>
-                  <option value="anders">Anders</option>
-                </select>
-              </div>
-              
-              <div class="form-group">
-                <!-- Empty space for symmetry -->
-              </div>
-            </div>
-            
-            <button type="submit" class="download-btn" id="download-btn">
-              <span>🚀</span>
-              <span>Download EVP Whitepaper Gratis</span>
-            </button>
-          </form>
+          </div>
 
           <div class="trust-indicators">
             <div class="trust-item">Beveiligd & Vertrouwelijk</div>
@@ -943,131 +905,57 @@ body {
 
   <!-- JavaScript -->
   <script>
-    // Initialize form
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('🎯 EVP FORM INITIALIZING...');
-      
-      const form = document.getElementById('download-form');
-      const loadingOverlay = document.getElementById('form-loading');
-      const successMessage = document.getElementById('success-message');
-      
-      if (!form) {
-        console.error('❌ Form element not found!');
-        return;
-      }
-      
-      console.log('✅ Form element found, adding event listener');
-      
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(form);
-        const data = {
-          name: formData.get('name'),
-          email: formData.get('email'),
-          phone: formData.get('phone'),
-          company: formData.get('company'),
-          role: formData.get('role')
-        };
-        
-        // Show loading
-        loadingOverlay.style.display = 'flex';
-        
-        // Debug: Show form data
-        console.log('📋 Form data collected:', data);
-        
-        // Send to Pipedrive
-        const pipedriveResult = sendToPipedriveForm(data);
-        console.log('🎯 Pipedrive submission result:', pipedriveResult);
-        
-        // Simulate download process
-        setTimeout(() => {
-          loadingOverlay.style.display = 'none';
-          form.style.display = 'none';
-          successMessage.style.display = 'block';
-          
-          // Trigger PDF download
-          const link = document.createElement('a');
-          link.href = 'https://recruitin.nl/wp-content/uploads/2025/06/De_verborgen_kracht_van_een_sterke_EVP-1.pdf';
-          link.download = 'De_verborgen_kracht_van_een_sterke_EVP.pdf';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          
-        }, 2000);
-      });
-    });
-
-    // Send data to Pipedrive - Direct form submission approach
-    function sendToPipedriveForm(formData) {
-      try {
-        console.log('🔧 Attempting to send lead to Pipedrive:', formData);
-        
-        // Method 1: Direct form POST
-        const pipedriveUrl = 'https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh';
-        
-        // Create hidden form for direct submission
-        const hiddenForm = document.createElement('form');
-        hiddenForm.method = 'POST';
-        hiddenForm.action = pipedriveUrl;
-        hiddenForm.target = 'pipedrive-frame';
-        hiddenForm.style.display = 'none';
-        
-        // Add form fields
-        const fields = {
-          'name': formData.name,
-          'email': formData.email,
-          'phone': formData.phone,
-          'company': formData.company,
-          'job_title': formData.role,
-          'source': 'EVP Whitepaper Landing Page'
-        };
-        
-        Object.keys(fields).forEach(key => {
-          if (fields[key]) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = key;
-            input.value = fields[key];
-            hiddenForm.appendChild(input);
-          }
-        });
-        
-        // Add hidden iframe for submission
-        let iframe = document.getElementById('pipedrive-frame');
-        if (!iframe) {
-          iframe = document.createElement('iframe');
-          iframe.name = 'pipedrive-frame';
-          iframe.id = 'pipedrive-frame';
-          iframe.style.display = 'none';
-          document.body.appendChild(iframe);
-        }
-        
-        // Submit form
-        document.body.appendChild(hiddenForm);
-        hiddenForm.submit();
-        document.body.removeChild(hiddenForm);
-        
-        console.log('✅ Lead submitted to Pipedrive via direct form POST');
-        
-        return true;
-      } catch (error) {
-        console.error('❌ Failed to send lead to Pipedrive:', error);
-        
-        // Store locally for manual processing
-        const leads = JSON.parse(localStorage.getItem('pendingLeads') || '[]');
-        leads.push({
-          ...formData,
-          timestamp: new Date().toISOString(),
-          source: 'EVP Whitepaper Landing Page'
-        });
-        localStorage.setItem('pendingLeads', JSON.stringify(leads));
-        console.log('💾 Lead stored locally for manual processing');
-        
-        return false;
-      }
+    // Direct download function
+    function startDownload() {
+      console.log('🚀 Starting PDF download...');
+      const link = document.createElement('a');
+      link.href = 'https://recruitin.nl/wp-content/uploads/2025/06/De_verborgen_kracht_van_een_sterke_EVP-1.pdf';
+      link.download = 'De_verborgen_kracht_van_een_sterke_EVP.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      console.log('✅ Download triggered');
     }
+
+    // Monitor Pipedrive form submissions
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🎯 EVP WEBSITE LOADED - Monitoring Pipedrive form...');
+      
+      // Check for Pipedrive form submission success
+      const checkPipedriveSubmission = setInterval(() => {
+        // Look for success indicators in Pipedrive form
+        const pipedriveContainer = document.querySelector('.pipedriveWebForms');
+        if (pipedriveContainer) {
+          const iframe = pipedriveContainer.querySelector('iframe');
+          if (iframe) {
+            try {
+              // Check if form was submitted successfully
+              const iframeDoc = iframe.contentDocument;
+              if (iframeDoc) {
+                const successElements = iframeDoc.querySelectorAll('[class*="success"], [class*="thank"], [id*="success"]');
+                if (successElements.length > 0) {
+                  console.log('✅ Pipedrive form submission detected!');
+                  startDownload();
+                  clearInterval(checkPipedriveSubmission);
+                }
+              }
+            } catch (e) {
+              // Cross-origin iframe - can't access content
+              console.log('🔒 Cross-origin iframe - monitoring externally');
+            }
+          }
+        }
+      }, 1000);
+      
+      // Auto-trigger download after 3 seconds as fallback
+      setTimeout(() => {
+        const downloadBtn = document.querySelector('.download-trigger button');
+        if (downloadBtn) {
+          downloadBtn.style.display = 'block';
+          console.log('💡 Manual download button available');
+        }
+      }, 3000);
+    });
 
     // Analytics tracking
     if (typeof gtag !== 'undefined') {
@@ -1077,20 +965,7 @@ body {
       });
     }
 
-    // Debug function - Test Pipedrive manually via console
-    window.testPipedrive = function() {
-      const testData = {
-        name: 'Test Wouter',
-        email: 'test@recruitin.nl', 
-        phone: '+31612345678',
-        company: 'Recruitin Test',
-        role: 'CEO'
-      };
-      console.log('🧪 Testing Pipedrive with:', testData);
-      return sendToPipedriveForm(testData);
-    };
-    
-    console.log('🚀 EVP WEBSITE LOADED - Debug function available: testPipedrive()');
+    console.log('🚀 EVP WEBSITE READY - Direct Pipedrive WebForm active');
   </script>
 </body>
 </html>

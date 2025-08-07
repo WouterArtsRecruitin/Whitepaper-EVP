@@ -399,10 +399,17 @@ body {
   width: 100%;
   opacity: 0;
   transition: opacity 0.5s ease;
+  position: relative;
+  z-index: 5;
 }
 
 .pipedriveWebForms.loaded {
   opacity: 1;
+}
+
+/* WordPress-specific Pipedrive styling */
+.pipedriveWebForms script {
+  display: block;
 }
 
 /* Style Pipedrive form elements to match design */
@@ -838,13 +845,9 @@ textarea:focus {
             <small>Dit kan enkele seconden duren</small>
           </div>
           
-          <div class="pipedriveWebForms" 
-               data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh"
-               id="pipedrive-form">
+          <div class="pipedriveWebForms" data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh">
+            <script src="https://webforms.pipedrive.com/f/loader"></script>
           </div>
-          
-          <!-- Pipedrive Loader Script -->
-          <script src="https://webforms.pipedrive.com/f/loader" async></script>
           
           <!-- Fallback message if form fails to load -->
           <div class="form-error-state" id="error-message" style="display: none;">
@@ -935,14 +938,22 @@ textarea:focus {
             return;
           }
           
-          // Check if Pipedrive loader has initialized
+          // Check if Pipedrive loader has initialized (WordPress style)
           if (window.pipedriveWebFormLoader || window.PipedriveWebForms) {
-            const pipedriveContainer = document.querySelector('#pipedrive-form');
-            if (pipedriveContainer && pipedriveContainer.children.length > 0) {
-              console.log('✅ Pipedrive form detected via loader check');
+            const pipedriveContainer = document.querySelector('.pipedriveWebForms');
+            if (pipedriveContainer && (pipedriveContainer.children.length > 1 || pipedriveContainer.innerHTML.includes('form'))) {
+              console.log('✅ Pipedrive form detected via WordPress loader check');
               handleFormLoadSuccess();
               return;
             }
+          }
+          
+          // WordPress-specific check: look for Pipedrive generated content
+          const pipedriveContent = document.querySelector('.pipedriveWebForms [class*="pd-"], .pipedriveWebForms [id*="pd-"]');
+          if (pipedriveContent) {
+            console.log('✅ Pipedrive form detected via WordPress content check');
+            handleFormLoadSuccess();
+            return;
           }
           
           if (checkCount >= maxChecks) {
@@ -982,31 +993,30 @@ textarea:focus {
         if (formLoadAttempts < maxLoadAttempts) {
           console.log(`🔄 Retrying form load (${formLoadAttempts + 1}/${maxLoadAttempts})`);
           setTimeout(() => {
-            // Clear any existing Pipedrive content
-            const pipedriveDiv = document.getElementById('pipedrive-form');
-            if (pipedriveDiv) {
-              pipedriveDiv.innerHTML = '';
-              pipedriveDiv.classList.remove('loaded');
+            // WordPress-style reload: recreate the entire Pipedrive container
+            const pipedriveContainer = document.querySelector('.pipedriveWebForms');
+            if (pipedriveContainer) {
+              // Store parent element
+              const parent = pipedriveContainer.parentNode;
+              
+              // Remove old container
+              pipedriveContainer.remove();
+              
+              // Create new WordPress-style container
+              const newContainer = document.createElement('div');
+              newContainer.className = 'pipedriveWebForms';
+              newContainer.setAttribute('data-pd-webforms', 'https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh');
+              
+              // Add script inside container (WordPress style)
+              const script = document.createElement('script');
+              script.src = 'https://webforms.pipedrive.com/f/loader?retry=' + formLoadAttempts;
+              newContainer.appendChild(script);
+              
+              // Insert new container
+              parent.insertBefore(newContainer, parent.querySelector('.form-error-state'));
+              
+              console.log('🔄 WordPress-style Pipedrive container recreated');
             }
-            
-            // Remove existing script
-            const existingScripts = document.querySelectorAll('script[src*=\"pipedrive\"]');
-            existingScripts.forEach(script => script.remove());
-            
-            // Add fresh script with cache busting
-            const newScript = document.createElement('script');
-            newScript.src = 'https://webforms.pipedrive.com/f/loader?t=' + Date.now();
-            newScript.async = true;
-            newScript.onload = () => {
-              console.log('🔄 Pipedrive script reloaded');
-              // Force re-initialization after script loads
-              setTimeout(() => {
-                if (window.pipedriveWebFormLoader) {
-                  window.pipedriveWebFormLoader.load();
-                }
-              }, 500);
-            };
-            document.body.appendChild(newScript);
             
             setTimeout(() => initializePipedriveForm(), 2000);
           }, 2000);
@@ -1208,11 +1218,39 @@ textarea:focus {
       }, 100);
     }
     
-    // Manual retry function for users
+    // Manual retry function for users (WordPress style)
     window.retryFormLoad = function() {
-      console.log('🔄 Manual form retry triggered');
-      formLoadAttempts = 0; // Reset attempt counter
-      initializePipedriveForm();
+      console.log('🔄 Manual WordPress-style form retry triggered');
+      
+      // Reset attempt counter
+      formLoadAttempts = 0;
+      
+      // WordPress-style complete reset
+      const pipedriveContainer = document.querySelector('.pipedriveWebForms');
+      if (pipedriveContainer) {
+        const parent = pipedriveContainer.parentNode;
+        pipedriveContainer.remove();
+        
+        // Recreate exact WordPress structure
+        const newContainer = document.createElement('div');
+        newContainer.className = 'pipedriveWebForms';
+        newContainer.setAttribute('data-pd-webforms', 'https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh');
+        
+        const script = document.createElement('script');
+        script.src = 'https://webforms.pipedrive.com/f/loader';
+        newContainer.appendChild(script);
+        
+        parent.insertBefore(newContainer, parent.querySelector('.form-error-state'));
+      }
+      
+      // Hide error state
+      const errorMessage = document.getElementById('error-message');
+      if (errorMessage) {
+        errorMessage.style.display = 'none';
+      }
+      
+      // Start fresh initialization
+      setTimeout(() => initializePipedriveForm(), 1000);
     };
     
     // Global error handler for additional debugging

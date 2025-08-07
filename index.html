@@ -385,162 +385,18 @@ body {
   font-size: var(--font-size-base);
 }
 
-/* Enhanced Pipedrive Form Styling */
-.pipedrive-form-container {
-  margin-bottom: var(--spacing-lg);
-  position: relative;
-  min-height: 450px;
-  background: var(--white);
-  border-radius: var(--border-radius-lg);
-  border: 1px solid var(--border-light);
-}
-
+/* Simple Fast Pipedrive Form Styling */
 .pipedriveWebForms {
   width: 100%;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  position: relative;
-  z-index: 5;
+  margin-bottom: var(--spacing-lg);
 }
 
-.pipedriveWebForms.loaded {
-  opacity: 1;
-}
-
-/* WordPress-specific Pipedrive styling */
-.pipedriveWebForms script {
-  display: block;
-}
-
-/* Style Pipedrive form elements to match design */
+/* Basic Pipedrive iframe styling */
 .pipedriveWebForms iframe {
   width: 100% !important;
   border: none !important;
-  border-radius: var(--border-radius-lg) !important;
-  min-height: 450px;
-}
-
-/* Enhanced Loading State */
-.form-loading-state {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--white);
-  border-radius: var(--border-radius-lg);
-  z-index: 10;
-  text-align: center;
-  padding: var(--spacing-xl);
-}
-
-.form-loading-state.hidden {
-  display: none;
-}
-
-.loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid var(--border-light);
-  border-top: 4px solid var(--recruitin-accent);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: var(--spacing-md);
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.form-loading-state p {
-  color: var(--text-primary);
-  font-size: var(--font-size-lg);
-  font-weight: 600;
-  margin-bottom: var(--spacing-xs);
-}
-
-.form-loading-state small {
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-}
-
-/* Error State */
-.form-error-state {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: rgba(244, 124, 60, 0.05);
-  border: 2px solid rgba(244, 124, 60, 0.2);
-  border-radius: var(--border-radius-lg);
-  z-index: 15;
-  text-align: center;
-  padding: var(--spacing-xl);
-}
-
-.error-icon {
-  font-size: 3rem;
-  margin-bottom: var(--spacing-md);
-}
-
-.form-error-state h4 {
-  color: var(--recruitin-accent);
-  font-size: var(--font-size-xl);
-  margin-bottom: var(--spacing-md);
-  font-weight: 700;
-}
-
-.form-error-state p {
-  color: var(--text-secondary);
-  font-size: var(--font-size-base);
-  margin-bottom: var(--spacing-lg);
-  line-height: 1.5;
-}
-
-.contact-link {
-  display: inline-block;
-  background: var(--recruitin-primary);
-  color: var(--white);
-  text-decoration: none;
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-radius: var(--border-radius-md);
-  font-weight: 600;
-  margin-bottom: var(--spacing-md);
-  transition: all 0.3s ease;
-}
-
-.contact-link:hover {
-  background: var(--recruitin-secondary);
-  transform: translateY(-1px);
-  color: var(--white);
-  text-decoration: none;
-}
-
-.retry-btn {
-  background: var(--gradient-cta);
-  color: var(--white);
-  border: none;
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-radius: var(--border-radius-md);
-  font-size: var(--font-size-base);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.retry-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-medium);
+  border-radius: var(--border-radius-md) !important;
+  min-height: 400px;
 }
 
 /* Trust Indicators */
@@ -837,26 +693,9 @@ textarea:focus {
           </p>
         </div>
 
-        <!-- Pipedrive Form with Enhanced Loading -->
-        <div class="pipedrive-form-container" id="pipedrive-container">
-          <div class="form-loading-state" id="loading-message">
-            <div class="loading-spinner"></div>
-            <p>Formulier wordt geladen...</p>
-            <small>Dit kan enkele seconden duren</small>
-          </div>
-          
-          <div class="pipedriveWebForms" data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh">
-            <script src="https://webforms.pipedrive.com/f/loader"></script>
-          </div>
-          
-          <!-- Fallback message if form fails to load -->
-          <div class="form-error-state" id="error-message" style="display: none;">
-            <div class="error-icon">⚠️</div>
-            <h4>Formulier kan niet worden geladen</h4>
-            <p>Probeer de pagina te vernieuwen of contacteer ons direct:</p>
-            <a href="mailto:info@recruitin.nl" class="contact-link">info@recruitin.nl</a>
-            <button onclick="retryFormLoad()" class="retry-btn">🔄 Opnieuw Proberen</button>
-          </div>
+        <!-- Simple Fast Pipedrive Form -->
+        <div class="pipedriveWebForms" data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh">
+          <script src="https://webforms.pipedrive.com/f/loader"></script>
         </div>
 
         <!-- Trust Indicators -->
@@ -872,197 +711,31 @@ textarea:focus {
 
   <!-- Scripts -->
   <script>
-    // Enhanced Form & UX Interactions with Robust Loading
+    // Simple Fast Pipedrive Form Handler
     document.addEventListener('DOMContentLoaded', function() {
       console.log('🚀 EVP Whitepaper Landing Page geladen - Recruitin');
       
-      // Form elements
-      const loadingMessage = document.getElementById('loading-message');
-      const errorMessage = document.getElementById('error-message');
-      const pipedriveForm = document.getElementById('pipedrive-form');
-      
-      let formLoadAttempts = 0;
-      let maxLoadAttempts = 3;
-      let loadCheckInterval;
-      let formLoadTimeout;
-      
-      // Start form loading process
-      initializePipedriveForm();
-      
-      function initializePipedriveForm() {
-        formLoadAttempts++;
-        console.log(`📋 Pipedrive form loading attempt: ${formLoadAttempts}`);
-        
-        // Show loading state
-        if (loadingMessage) {
-          loadingMessage.classList.remove('hidden');
-        }
-        if (errorMessage) {
-          errorMessage.style.display = 'none';
-        }
-        
-        // Set up form load detection with multiple checks
-        setupFormDetection();
-        
-        // Set timeout for this attempt
-        formLoadTimeout = setTimeout(() => {
-          console.warn(`⚠️ Form load attempt ${formLoadAttempts} timed out`);
-          handleFormLoadFailure();
-        }, 15000); // 15 second timeout
-      }
-      
-      function setupFormDetection() {
-        let checkCount = 0;
-        const maxChecks = 150; // Check for 15 seconds (100ms intervals)
-        
-        loadCheckInterval = setInterval(() => {
-          checkCount++;
+      // Listen for Pipedrive form events
+      window.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'pipedrive-form-submitted') {
+          console.log('🎉 Pipedrive form submitted successfully');
           
-          // Check for iframe presence and size
-          const iframe = document.querySelector('.pipedriveWebForms iframe');
-          const hasContent = iframe && (iframe.offsetHeight > 100 || iframe.contentDocument);
-          
-          if (hasContent) {
-            console.log('✅ Pipedrive form detected via iframe check');
-            handleFormLoadSuccess();
-            return;
+          // Track conversion
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'conversion', {
+              'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+              'event_category': 'lead_generation',
+              'event_label': 'evp_whitepaper_download'
+            });
           }
           
-          // Check for Pipedrive form elements
-          const pipedriveForm = document.querySelector('.pipedriveWebForms form');
-          const pipedriveInputs = document.querySelectorAll('.pipedriveWebForms input, .pipedriveWebForms select, .pipedriveWebForms button');
+          // Trigger PDF download
+          triggerRealPDFDownload();
           
-          if (pipedriveForm || pipedriveInputs.length > 0) {
-            console.log('✅ Pipedrive form detected via form elements');
-            handleFormLoadSuccess();
-            return;
-          }
-          
-          // Check if Pipedrive loader has initialized (WordPress style)
-          if (window.pipedriveWebFormLoader || window.PipedriveWebForms) {
-            const pipedriveContainer = document.querySelector('.pipedriveWebForms');
-            if (pipedriveContainer && (pipedriveContainer.children.length > 1 || pipedriveContainer.innerHTML.includes('form'))) {
-              console.log('✅ Pipedrive form detected via WordPress loader check');
-              handleFormLoadSuccess();
-              return;
-            }
-          }
-          
-          // WordPress-specific check: look for Pipedrive generated content
-          const pipedriveContent = document.querySelector('.pipedriveWebForms [class*="pd-"], .pipedriveWebForms [id*="pd-"]');
-          if (pipedriveContent) {
-            console.log('✅ Pipedrive form detected via WordPress content check');
-            handleFormLoadSuccess();
-            return;
-          }
-          
-          if (checkCount >= maxChecks) {
-            console.warn(`⚠️ Form detection checks exceeded (${checkCount}/${maxChecks})`);
-            clearInterval(loadCheckInterval);
-            // Don't call handleFormLoadFailure here, let the timeout handle it
-          }
-        }, 100);
-      }
-      
-      function handleFormLoadSuccess() {
-        console.log('🎉 Pipedrive form loaded successfully!');
-        
-        // Clear intervals and timeouts
-        clearInterval(loadCheckInterval);
-        clearTimeout(formLoadTimeout);
-        
-        // Update UI
-        if (loadingMessage) {
-          loadingMessage.classList.add('hidden');
+          // Show success message
+          showSuccessMessage();
         }
-        if (pipedriveForm) {
-          pipedriveForm.classList.add('loaded');
-        }
-        
-        // Setup form submission listener
-        setupFormSubmissionListener();
-      }
-      
-      function handleFormLoadFailure() {
-        console.error(`❌ Form load attempt ${formLoadAttempts} failed`);
-        
-        // Clear intervals
-        clearInterval(loadCheckInterval);
-        clearTimeout(formLoadTimeout);
-        
-        if (formLoadAttempts < maxLoadAttempts) {
-          console.log(`🔄 Retrying form load (${formLoadAttempts + 1}/${maxLoadAttempts})`);
-          setTimeout(() => {
-            // WordPress-style reload: recreate the entire Pipedrive container
-            const pipedriveContainer = document.querySelector('.pipedriveWebForms');
-            if (pipedriveContainer) {
-              // Store parent element
-              const parent = pipedriveContainer.parentNode;
-              
-              // Remove old container
-              pipedriveContainer.remove();
-              
-              // Create new WordPress-style container
-              const newContainer = document.createElement('div');
-              newContainer.className = 'pipedriveWebForms';
-              newContainer.setAttribute('data-pd-webforms', 'https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh');
-              
-              // Add script inside container (WordPress style)
-              const script = document.createElement('script');
-              script.src = 'https://webforms.pipedrive.com/f/loader?retry=' + formLoadAttempts;
-              newContainer.appendChild(script);
-              
-              // Insert new container
-              parent.insertBefore(newContainer, parent.querySelector('.form-error-state'));
-              
-              console.log('🔄 WordPress-style Pipedrive container recreated');
-            }
-            
-            setTimeout(() => initializePipedriveForm(), 2000);
-          }, 2000);
-        } else {
-          console.error('💥 All form load attempts failed, showing error state');
-          showErrorState();
-        }
-      }
-      
-      function showErrorState() {
-        if (loadingMessage) {
-          loadingMessage.classList.add('hidden');
-        }
-        if (errorMessage) {
-          errorMessage.style.display = 'flex';
-        }
-      }
-      
-      function setupFormSubmissionListener() {
-        // Listen for Pipedrive form events
-        window.addEventListener('message', function(e) {
-          if (e.data && e.data.type === 'pipedrive-form-loaded') {
-            console.log('📨 Received Pipedrive loaded message');
-            handleFormLoadSuccess();
-          }
-          
-          if (e.data && e.data.type === 'pipedrive-form-submitted') {
-            console.log('🎉 Pipedrive form submitted successfully');
-            
-            // Track conversion
-            if (typeof gtag !== 'undefined') {
-              gtag('event', 'conversion', {
-                'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
-                'event_category': 'lead_generation',
-                'event_label': 'evp_whitepaper_download'
-              });
-            }
-            
-            // Trigger PDF download
-            triggerRealPDFDownload();
-            
-            // Show success message
-            showPipedriveSuccessMessage();
-          }
-        });
-      }
+      });
       
       // Scroll-to-form functionality
       function scrollToForm() {
@@ -1151,32 +824,23 @@ textarea:focus {
         }
       }
       
-      // Show success message for Pipedrive form
-      function showPipedriveSuccessMessage() {
+      // Simple success message
+      function showSuccessMessage() {
         const formCard = document.querySelector('.form-card');
         const originalContent = formCard.innerHTML;
         
         formCard.innerHTML = `
-          <div class="thank-you-message" style="text-align: center; padding: var(--spacing-xl);">
+          <div style="text-align: center; padding: var(--spacing-xl); background: rgba(39, 174, 96, 0.05); border-radius: var(--border-radius-lg);">
             <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">🎉</div>
-            <h3 style="color: var(--recruitin-primary); margin-bottom: var(--spacing-md);">Bedankt voor uw interesse!</h3>
-            <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">De EVP whitepaper wordt nu gedownload. U ontvangt binnenkort ook exclusieve recruitment insights per email van Recruitin.</p>
-            <div class="trust-indicators">
-              <div class="trust-item">✅ PDF wordt gedownload</div>
-              <div class="trust-item">📧 Email bevestiging volgt</div>
-              <div class="trust-item">🔒 Gegevens veilig opgeslagen</div>
-            </div>
+            <h3 style="color: var(--recruitin-primary); margin-bottom: var(--spacing-md);">Bedankt!</h3>
+            <p style="color: var(--text-secondary);">De EVP whitepaper wordt nu gedownload.</p>
           </div>
         `;
         
-        // Reset after 8 seconds
+        // Reset after 5 seconds
         setTimeout(() => {
           formCard.innerHTML = originalContent;
-          // Reinitialize Pipedrive form
-          if (window.pipedriveWebFormLoader) {
-            window.pipedriveWebFormLoader.load();
-          }
-        }, 8000);
+        }, 5000);
       }
       
       // Performance monitoring
@@ -1218,47 +882,10 @@ textarea:focus {
       }, 100);
     }
     
-    // Manual retry function for users (WordPress style)
-    window.retryFormLoad = function() {
-      console.log('🔄 Manual WordPress-style form retry triggered');
-      
-      // Reset attempt counter
-      formLoadAttempts = 0;
-      
-      // WordPress-style complete reset
-      const pipedriveContainer = document.querySelector('.pipedriveWebForms');
-      if (pipedriveContainer) {
-        const parent = pipedriveContainer.parentNode;
-        pipedriveContainer.remove();
-        
-        // Recreate exact WordPress structure
-        const newContainer = document.createElement('div');
-        newContainer.className = 'pipedriveWebForms';
-        newContainer.setAttribute('data-pd-webforms', 'https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh');
-        
-        const script = document.createElement('script');
-        script.src = 'https://webforms.pipedrive.com/f/loader';
-        newContainer.appendChild(script);
-        
-        parent.insertBefore(newContainer, parent.querySelector('.form-error-state'));
-      }
-      
-      // Hide error state
-      const errorMessage = document.getElementById('error-message');
-      if (errorMessage) {
-        errorMessage.style.display = 'none';
-      }
-      
-      // Start fresh initialization
-      setTimeout(() => initializePipedriveForm(), 1000);
+    // Simple page refresh if needed
+    window.refreshPage = function() {
+      location.reload();
     };
-    
-    // Global error handler for additional debugging
-    window.addEventListener('error', function(e) {
-      if (e.message && e.message.includes('pipedrive')) {
-        console.error('🚨 Pipedrive related error:', e.message);
-      }
-    });
   </script>
 
   <!-- Optional: Google Analytics / Tag Manager -->

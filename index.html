@@ -1058,19 +1058,8 @@ textarea:focus {
           </button>
         </form>
 
-        <!-- Hidden Pipedrive Lead Form -->
-        <form id="pipedrive-lead-form" style="display: none;" 
-              action="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh" 
-              method="POST" target="pipedrive-frame">
-          <input type="text" name="name" id="pipedrive-name">
-          <input type="email" name="email" id="pipedrive-email">
-          <input type="text" name="company" id="pipedrive-company">
-          <input type="text" name="job_title" id="pipedrive-role">
-          <input type="hidden" name="source" value="EVP Whitepaper Landing Page">
-        </form>
-        
-        <!-- Hidden iframe for Pipedrive form submission -->
-        <iframe name="pipedrive-frame" style="display: none;"></iframe>
+        <!-- Direct Pipedrive WebForm Integration -->
+        <div class="pipedriveWebForms" data-pd-webforms="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh" style="display: none;"></div>
 
         <!-- Trust Indicators -->
         <div class="trust-indicators">
@@ -1204,27 +1193,30 @@ textarea:focus {
         }
       });
       
-      // Send data to Pipedrive using hidden form submission
+      // Send data to Pipedrive using direct API approach
       function sendToPipedriveForm(formData) {
         try {
-          // Get hidden form elements
-          const pipedriveForm = document.getElementById('pipedrive-lead-form');
-          const nameField = document.getElementById('pipedrive-name');
-          const emailField = document.getElementById('pipedrive-email');
-          const companyField = document.getElementById('pipedrive-company');
-          const roleField = document.getElementById('pipedrive-role');
+          // Use Pipedrive WebForms direct submission
+          const pipedriveUrl = 'https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh';
           
-          // Fill hidden form with data
-          if (nameField) nameField.value = formData.name || '';
-          if (emailField) emailField.value = formData.email || '';
-          if (companyField) companyField.value = formData.company || '';
-          if (roleField) roleField.value = formData.role || '';
+          // Create form data
+          const submitData = new FormData();
+          submitData.append('name', formData.name || '');
+          submitData.append('email', formData.email || '');
+          submitData.append('company', formData.company || '');
+          submitData.append('job_title', formData.role || '');
+          submitData.append('source', 'EVP Whitepaper Landing Page');
           
-          // Submit hidden form to Pipedrive
-          if (pipedriveForm) {
-            pipedriveForm.submit();
+          // Submit via fetch with no-cors mode
+          fetch(pipedriveUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: submitData
+          }).then(() => {
             console.log('📤 Lead data sent to Pipedrive:', formData);
-          }
+          }).catch((error) => {
+            console.log('📤 Pipedrive submission attempted (no-cors mode):', formData);
+          });
           
           return true;
         } catch (error) {

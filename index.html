@@ -986,45 +986,57 @@ body {
       });
     });
 
-    // Send data to Pipedrive using iframe manipulation
+    // Send data to Pipedrive - Direct form submission approach
     function sendToPipedriveForm(formData) {
       try {
-        // Wait for Pipedrive form to load
-        setTimeout(() => {
-          const pipedriveForm = document.querySelector('.pipedriveWebForms iframe');
-          if (pipedriveForm && pipedriveForm.contentDocument) {
-            const formDoc = pipedriveForm.contentDocument;
-            const nameField = formDoc.querySelector('input[name="name"]') || formDoc.querySelector('input[type="text"]');
-            const emailField = formDoc.querySelector('input[name="email"]') || formDoc.querySelector('input[type="email"]');
-            const phoneField = formDoc.querySelector('input[name="phone"]') || formDoc.querySelector('input[type="tel"]');
-            const companyField = formDoc.querySelector('input[name="company"]');
-            const submitBtn = formDoc.querySelector('button[type="submit"]') || formDoc.querySelector('input[type="submit"]');
-            
-            if (nameField) nameField.value = formData.name;
-            if (emailField) emailField.value = formData.email;
-            if (phoneField) phoneField.value = formData.phone;
-            if (companyField) companyField.value = formData.company;
-            
-            if (submitBtn) {
-              submitBtn.click();
-              console.log('📤 Pipedrive form submitted via iframe:', formData);
-              return true;
-            }
+        console.log('🔧 Attempting to send lead to Pipedrive:', formData);
+        
+        // Method 1: Direct form POST
+        const pipedriveUrl = 'https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh';
+        
+        // Create hidden form for direct submission
+        const hiddenForm = document.createElement('form');
+        hiddenForm.method = 'POST';
+        hiddenForm.action = pipedriveUrl;
+        hiddenForm.target = 'pipedrive-frame';
+        hiddenForm.style.display = 'none';
+        
+        // Add form fields
+        const fields = {
+          'name': formData.name,
+          'email': formData.email,
+          'phone': formData.phone,
+          'company': formData.company,
+          'job_title': formData.role,
+          'source': 'EVP Whitepaper Landing Page'
+        };
+        
+        Object.keys(fields).forEach(key => {
+          if (fields[key]) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = fields[key];
+            hiddenForm.appendChild(input);
           }
-          
-          // Fallback: Try global Pipedrive API
-          if (window.LeadBooster && window.LeadBooster.submit) {
-            window.LeadBooster.submit({
-              name: formData.name,
-              email: formData.email,
-              phone: formData.phone,
-              company: formData.company,
-              job_title: formData.role
-            });
-            console.log('📤 Submitted via LeadBooster API:', formData);
-            return true;
-          }
-        }, 1000);
+        });
+        
+        // Add hidden iframe for submission
+        let iframe = document.getElementById('pipedrive-frame');
+        if (!iframe) {
+          iframe = document.createElement('iframe');
+          iframe.name = 'pipedrive-frame';
+          iframe.id = 'pipedrive-frame';
+          iframe.style.display = 'none';
+          document.body.appendChild(iframe);
+        }
+        
+        // Submit form
+        document.body.appendChild(hiddenForm);
+        hiddenForm.submit();
+        document.body.removeChild(hiddenForm);
+        
+        console.log('✅ Lead submitted to Pipedrive via direct form POST');
         
         return true;
       } catch (error) {

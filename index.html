@@ -105,6 +105,25 @@ body {
   pointer-events: none;
 }
 
+/* Recruitin Branding */
+.brand-header {
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.recruitin-wordmark {
+  margin-bottom: 8px;
+}
+
+.brand-tagline {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+  margin: 0;
+  font-weight: 300;
+}
+
 .header-content {
   position: relative;
   z-index: 2;
@@ -856,6 +875,79 @@ textarea:focus {
   }
 }
 
+/* Persoonlijke Begeleiding CTA */
+.personal-guidance-cta {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 24px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.guidance-content {
+  text-align: center;
+}
+
+.guidance-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.recruitin-logo {
+  flex-shrink: 0;
+}
+
+.guidance-header h4 {
+  margin: 0 0 8px 0;
+  color: var(--primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.guidance-header p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.guidance-cta-btn {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(244, 124, 60, 0.2);
+}
+
+.guidance-cta-btn:hover {
+  background: #e6672d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(244, 124, 60, 0.3);
+}
+
+@media (max-width: 768px) {
+  .guidance-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .personal-guidance-cta {
+    margin: 30px 20px;
+    padding: 20px;
+  }
+}
+
 /* Print Styles */
 @media print {
   .header,
@@ -885,8 +977,21 @@ textarea:focus {
   <!-- Header Section -->
   <header class="header">
     <div class="header-content">
+      <!-- Recruitin Branding -->
+      <div class="brand-header">
+        <div class="recruitin-wordmark">
+          <svg width="140" height="28" viewBox="0 0 450 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <text x="10" y="45" fill="#1B365D" font-family="Inter, sans-serif" font-size="32" font-weight="600">recruitin</text>
+            <circle cx="380" cy="35" r="15" fill="#4A5568"/>
+            <circle cx="380" cy="35" r="10" fill="white"/>
+            <circle cx="380" cy="35" r="5" fill="#F47C3C"/>
+          </svg>
+        </div>
+        <p class="brand-tagline">the right people, right now</p>
+      </div>
+      
       <div class="header-badge">
-        🎯 Exclusieve Recruitin Whitepaper
+        🎯 Exclusieve Whitepaper
       </div>
       
       <h1>De Verborgen Kracht van een Sterke EVP</h1>
@@ -1067,6 +1172,30 @@ textarea:focus {
           <div class="trust-item">Beveiligd & Vertrouwelijk</div>
           <div class="trust-item">Direct Download</div>
           <div class="trust-item">2.847+ Downloads</div>
+        </div>
+
+        <!-- Persoonlijke Begeleiding CTA - Better Position -->
+        <div class="personal-guidance-cta">
+          <div class="guidance-content">
+            <div class="guidance-header">
+              <div class="recruitin-logo">
+                <svg width="40" height="40" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="100" cy="100" r="80" fill="#4A5568"/>
+                  <circle cx="100" cy="100" r="50" fill="white"/>
+                  <circle cx="100" cy="100" r="20" fill="#F47C3C"/>
+                </svg>
+              </div>
+              <div>
+                <h4>🎯 Persoonlijke EVP Begeleiding</h4>
+                <p>Implementeer je EVP succesvol met onze recruitment experts</p>
+              </div>
+            </div>
+            <a href="https://calendly.com/wouter-arts-/verborgen-kracht-van-een-sterke-evp" 
+               target="_blank" 
+               class="guidance-cta-btn">
+              📅 Plan Gratis Strategiesessie
+            </a>
+          </div>
         </div>
 
         <!-- Sidebar Resource Box -->

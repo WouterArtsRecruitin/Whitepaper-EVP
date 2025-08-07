@@ -965,8 +965,12 @@ body {
         // Show loading
         loadingOverlay.style.display = 'flex';
         
+        // Debug: Show form data
+        console.log('📋 Form data collected:', data);
+        
         // Send to Pipedrive
-        sendToPipedriveForm(data);
+        const pipedriveResult = sendToPipedriveForm(data);
+        console.log('🎯 Pipedrive submission result:', pipedriveResult);
         
         // Simulate download process
         setTimeout(() => {
@@ -1063,6 +1067,21 @@ body {
         'page_location': window.location.href
       });
     }
+
+    // Debug function - Test Pipedrive manually via console
+    window.testPipedrive = function() {
+      const testData = {
+        name: 'Test Wouter',
+        email: 'test@recruitin.nl', 
+        phone: '+31612345678',
+        company: 'Recruitin Test',
+        role: 'CEO'
+      };
+      console.log('🧪 Testing Pipedrive with:', testData);
+      return sendToPipedriveForm(testData);
+    };
+    
+    console.log('🚀 Debug function loaded. Type testPipedrive() in console to test.');
   </script>
 </body>
 </html>

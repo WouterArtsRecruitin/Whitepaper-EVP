@@ -1058,6 +1058,20 @@ textarea:focus {
           </button>
         </form>
 
+        <!-- Hidden Pipedrive Lead Form -->
+        <form id="pipedrive-lead-form" style="display: none;" 
+              action="https://webforms.pipedrive.com/f/6aRZqql6vqLT2wacMduJkFzgOAX1pvzf5uZLGlMoIBzM2yGucpqgBWY9o4YV2Ju8Lh" 
+              method="POST" target="pipedrive-frame">
+          <input type="text" name="name" id="pipedrive-name">
+          <input type="email" name="email" id="pipedrive-email">
+          <input type="text" name="company" id="pipedrive-company">
+          <input type="text" name="job_title" id="pipedrive-role">
+          <input type="hidden" name="source" value="EVP Whitepaper Landing Page">
+        </form>
+        
+        <!-- Hidden iframe for Pipedrive form submission -->
+        <iframe name="pipedrive-frame" style="display: none;"></iframe>
+
         <!-- Trust Indicators -->
         <div class="trust-indicators">
           <div class="trust-item">Beveiligd & Vertrouwelijk</div>
@@ -1153,7 +1167,10 @@ textarea:focus {
             });
           }
           
-          // Simulate form processing
+          // Send data to Pipedrive using hidden form
+          sendToPipedriveForm({ name, email, company, role });
+          
+          // Continue with download process
           setTimeout(() => {
             // Reset button
             downloadBtn.disabled = false;
@@ -1164,7 +1181,7 @@ textarea:focus {
             
             // Show success message
             showSuccessMessage(name);
-          }, 1500);
+          }, 1000);
         });
       }
       
@@ -1187,6 +1204,46 @@ textarea:focus {
         }
       });
       
+      // Send data to Pipedrive using hidden form submission
+      function sendToPipedriveForm(formData) {
+        try {
+          // Get hidden form elements
+          const pipedriveForm = document.getElementById('pipedrive-lead-form');
+          const nameField = document.getElementById('pipedrive-name');
+          const emailField = document.getElementById('pipedrive-email');
+          const companyField = document.getElementById('pipedrive-company');
+          const roleField = document.getElementById('pipedrive-role');
+          
+          // Fill hidden form with data
+          if (nameField) nameField.value = formData.name || '';
+          if (emailField) emailField.value = formData.email || '';
+          if (companyField) companyField.value = formData.company || '';
+          if (roleField) roleField.value = formData.role || '';
+          
+          // Submit hidden form to Pipedrive
+          if (pipedriveForm) {
+            pipedriveForm.submit();
+            console.log('📤 Lead data sent to Pipedrive:', formData);
+          }
+          
+          return true;
+        } catch (error) {
+          console.error('❌ Failed to send lead to Pipedrive:', error);
+          
+          // Fallback: Store locally
+          const leads = JSON.parse(localStorage.getItem('pendingLeads') || '[]');
+          leads.push({
+            ...formData,
+            timestamp: new Date().toISOString(),
+            source: 'EVP Whitepaper Landing Page'
+          });
+          localStorage.setItem('pendingLeads', JSON.stringify(leads));
+          console.log('💾 Lead stored locally for manual processing');
+          
+          return false;
+        }
+      }
+
       // Analytics tracking (if Google Analytics is implemented)
       if (typeof gtag !== 'undefined') {
         // Track page view
